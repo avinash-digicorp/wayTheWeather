@@ -1,0 +1,22 @@
+{
+  "common": {},
+  "header": {
+    "home": "Home",
+    "notification": "Notification",
+    "profile": "Profile"
+  },
+  "profile": {
+    "name": "Name",
+    "mobile": "Mobile",
+    "products": "Products",
+    "email": "Email",
+    "toggle_language": "Toggle Language"
+  },
+
+  "button": {
+    "continue": "Continue",
+    "logout": "Logout",
+    "login": "Login",
+    "cancel": "Cancel"
+  }
+}

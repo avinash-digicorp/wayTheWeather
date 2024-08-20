@@ -1,0 +1,20 @@
+{
+  "common": {},
+  "header": {
+    "home": "Inicio",
+    "notification": "Notificación",
+    "profile": "Perfil"
+  },
+  "profile": {
+    "name": "Nombre",
+    "mobile": "Móvil",
+    "email": "Correo electrónico",
+    "toggle_language": "Cambiar idioma"
+  },
+  "button": {
+    "continue": "Continuar",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "cancel": "Cancelar"
+  }
+}
