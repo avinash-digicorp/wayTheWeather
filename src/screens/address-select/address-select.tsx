@@ -1,5 +1,4 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {AnimatedIcon, ButtonView, DateTimePicker, Text} from 'components';
 

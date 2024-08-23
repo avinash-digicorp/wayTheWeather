@@ -1,13 +1,11 @@
-import check from './check-animation.json'
-import lineLoading from './line-loading.json'
-import lineBackground from './line-bg.json'
-import rightArrow from './right-arrow-animation.json'
-import rightArrow2 from './right-arrow-animation-2.json'
+import lineLoading from './line-loading.json';
+import locationPin from './location-pin.json';
+import locationPin2 from './location-pin-2.json';
+import lineBackground from './line-bg.json';
 
 export const ANIMATED_ICONS = {
-  check,
   lineLoading,
+  locationPin2,
   lineBackground,
-  rightArrow,
-  rightArrow2
-}
+  locationPin,
+};

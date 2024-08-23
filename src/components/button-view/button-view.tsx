@@ -1,4 +1,4 @@
-import React, {JSXElementConstructor, useState} from 'react'
+import React, {JSXElementConstructor, useState} from 'react';
 import {
   Animated,
   GestureResponderEvent,
@@ -7,14 +7,14 @@ import {
   TouchableHighlight,
   TouchableHighlightComponent,
   TouchableMixin,
-  TouchableOpacity
-} from 'react-native'
-import {hitSlop} from 'utils/size'
-import colors from 'theme'
-import {IButtonViewProps} from './type.d'
-import {Ripple} from 'components/animations'
-import {Constructor} from 'react-native/types/private/Utilities'
-import {TimerMixin} from 'react-native/types/private/TimerMixin'
+  TouchableOpacity,
+} from 'react-native';
+import {hitSlop} from 'utils/size';
+import colors from 'theme';
+import {IButtonViewProps} from './type.d';
+import {Ripple} from 'components/animations';
+import {Constructor} from 'react-native/types/private/Utilities';
+import {TimerMixin} from 'react-native/types/private/TimerMixin';
 
 export const ButtonView = (props: IButtonViewProps) => {
   const {
@@ -26,39 +26,39 @@ export const ButtonView = (props: IButtonViewProps) => {
     applyDisabledStyle = true,
     withHitSlop,
     button = 'ripple',
-    underlayColor = colors.gray1
-  } = props
-  if (hide) return <React.Fragment />
+    underlayColor = colors.gray1,
+  } = props;
+  if (hide) return <React.Fragment />;
 
-  const [animatedScale] = useState(new Animated.Value(1))
+  const [animatedScale] = useState(new Animated.Value(1));
 
   const toggleAnimatedScale = (toValue: number) => {
     Animated.timing(animatedScale, {
       toValue,
       duration: 100,
-      useNativeDriver: true
-    }).start()
-  }
+      useNativeDriver: true,
+    }).start();
+  };
 
-  const disabledStyle = applyDisabledStyle && disabled && {opacity: 0.6}
-  const styles = [isCard && style.card, disabledStyle, props.style]
-  const animatedStyle = {transform: [{scale: animatedScale}]}
+  const disabledStyle = applyDisabledStyle && disabled && {opacity: 0.6};
+  const styles = [isCard && style.card, disabledStyle, props.style];
+  const animatedStyle = {transform: [{scale: animatedScale}]};
 
   const onPress:
     | null
     | ((event: GestureResponderEvent) => void)
     | undefined = e => {
-    if (!props?.disableAction) return
-    if (loading) return
-    props?.onPress?.(e)
-  }
+    if (!props?.disableAction) return;
+    if (loading) return;
+    props?.onPress?.(e);
+  };
 
   const buttons = {
     normal: TouchableOpacity,
-    highlight: TouchableHighlight
-  }
+    highlight: TouchableHighlight,
+  };
 
-  let ActionButton = buttons[button as keyof typeof buttons]
+  let ActionButton = buttons[button as keyof typeof buttons];
   return (
     <Animated.View className={props?.baseClass} style={animatedStyle}>
       <Ripple withRipple={withRipple} onPress={onPress}>
@@ -66,8 +66,9 @@ export const ButtonView = (props: IButtonViewProps) => {
           onLongPress={() => toggleAnimatedScale(1)}
           onPressIn={() => toggleAnimatedScale(props?.scale ?? 0.98)}
           onPressOut={() => toggleAnimatedScale(1)}
+          activeOpacity={0.9}
           {...(withHitSlop && {
-            hitSlop: hitSlop(20)
+            hitSlop: hitSlop(20),
           })}
           {...(button === 'highlight' && {underlayColor})}
           {...props}
@@ -77,13 +78,13 @@ export const ButtonView = (props: IButtonViewProps) => {
         </ActionButton>
       </Ripple>
     </Animated.View>
-  )
-}
+  );
+};
 
 ButtonView.defaultProps = {
   hide: false,
-  button: 'normal'
-}
+  button: 'normal',
+};
 
 const style = StyleSheet.create({
   card: {
@@ -94,6 +95,6 @@ const style = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3,
     marginVertical: 10,
-    alignSelf: 'center'
-  }
-})
+    alignSelf: 'center',
+  },
+});

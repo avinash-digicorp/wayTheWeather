@@ -1,18 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {Button, StatusBar, View} from 'react-native'
-import styles from './styles'
-import {navigateTo, routes} from '@/navigation'
-import {AnimatedIcon, AssetImage, Text, useToast} from 'components'
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from 'utils'
-import FullScreenLoading from './full-screen-loading'
+import React from 'react';
+import {Button, StatusBar, View} from 'react-native';
+import styles from './styles';
+import {navigateTo, routes} from '@/navigation';
+import {AssetImage, Text} from 'components';
 
 export default () => {
-  const {showToast} = useToast()
-  const value = useRef(0)
-  const [id, setId] = useState<number>(0)
-  const [visible, setVisible] = useState(false)
-
-  const onPress = () => navigateTo(routes.LOGIN)
+  const onPress = () => navigateTo(routes.LOGIN);
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -29,5 +22,5 @@ export default () => {
       </View>
       {/* <FullScreenLoading visible={visible} /> */}
     </View>
-  )
-}
+  );
+};

@@ -1,8 +1,8 @@
-import React from 'react'
-import {View} from 'react-native'
-import LottieView from 'lottie-react-native'
-import {IProps} from './type.d'
-import {ANIMATED_ICONS} from 'assets/animated-icons'
+import React from 'react';
+import {View} from 'react-native';
+import LottieView from 'lottie-react-native';
+import {IProps} from './type.d';
+import {ANIMATED_ICONS} from 'assets/animated-icons';
 
 export const AnimatedIcon = (props: IProps) => {
   const {
@@ -11,12 +11,12 @@ export const AnimatedIcon = (props: IProps) => {
     hide = false,
     style = {},
     autoPlay = false,
-    progress = 1
-  } = props
+    progress = 1,
+  } = props;
 
-  if (hide) return null
-  const icon = ANIMATED_ICONS[name as keyof typeof ANIMATED_ICONS]
-  const lottieStyles = [style]
+  if (hide) return null;
+  const icon = ANIMATED_ICONS[name as keyof typeof ANIMATED_ICONS];
+  const lottieStyles = [style];
 
   return (
     <View>
@@ -29,5 +29,5 @@ export const AnimatedIcon = (props: IProps) => {
         {...props}
       />
     </View>
-  )
-}
+  );
+};
