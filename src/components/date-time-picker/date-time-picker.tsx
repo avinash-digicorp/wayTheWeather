@@ -1,46 +1,65 @@
 import React, {useState} from 'react';
-import {Text} from 'components';
-import {Button, View} from 'react-native';
+import {ButtonView, Text} from 'components';
+import {View} from 'react-native';
 import Picker from '@react-native-community/datetimepicker';
+import {isIosPlatform} from 'utils';
+import moment from 'moment';
+import colors from 'theme';
+import {DateType} from 'store/common-interface';
+import {LocalizationKeys} from 'locales/use-translation';
 
-export const DateTimePicker = () => {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+interface IDateTimePickerProps {
+  mode?: 'date' | 'time';
+  date: DateType;
+  onChange: (selectedDate: DateType) => void;
+  label: LocalizationKeys;
+}
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
+export const DateTimePicker = (props: IDateTimePickerProps) => {
+  const ref = React.createRef<any>();
+  const {mode, label, date, onChange} = props;
+  const [show, setShow] = useState<boolean>(false);
+
+  const onChangeValue = (event: any, selectedDate: any) => {
+    try {
+      setShow(false);
+      const currentDate = moment(selectedDate);
+      onChange(currentDate);
+      return true;
+    } catch (error) {}
   };
 
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
+  const dateString =
+    mode === 'time'
+      ? moment(date).format('HH:mm A')
+      : moment(date).format('DD MMM YYYY');
   return (
-    <View>
-      <Button onPress={showDatepicker} title="Show date picker!" />
-      <Button onPress={showTimepicker} title="Show time picker!" />
-      <Text>selected: {date.toLocaleString()}</Text>
-      {show && (
+    <View className="items-center justify-center mb-14">
+      <Text className="text-center text-gray-700 text-lg mb-1" tx={label} />
+      <ButtonView
+        hide={isIosPlatform}
+        onPress={() => setShow(true)}
+        className="bg-gray-100 py-2 px-2 rounded-md items-center justify-center">
+        <Text className="text-lg text-center" text={dateString} />
+      </ButtonView>
+      {(show || isIosPlatform) && (
         <Picker
-          testID="dateTimePicker"
-          value={date}
+          ref={ref}
+          value={date.toDate()}
           mode={mode}
-          is24Hour={true}
-          onChange={onChange}
+          collapsable
+          shouldRasterizeIOS
+          onChange={onChangeValue}
+          textColor="#12ee41"
+          accentColor={colors.primary}
         />
       )}
     </View>
   );
+};
+
+DateTimePicker.defaultProps = {
+  mode: 'date',
+  date: moment(),
+  onChange: () => {},
 };

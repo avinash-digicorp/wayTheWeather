@@ -1,47 +1,60 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StatusBar, StyleSheet, View} from 'react-native';
-import {AnimatedIcon, ButtonView, DateTimePicker, Text} from 'components';
+import {ImageBackground, StatusBar, StyleSheet, View} from 'react-native';
+import {useHomeContainer} from './home-container';
+import DateTimeView from './partials/date-time-view';
+import {SearchLocationView} from './partials/search-location-view';
+import {ASSET_IMAGES} from 'assets/images';
+import {AnimatedBlurView, LoadingButton} from 'components';
 
 export default () => {
+  const props = useHomeContainer();
+  const {enterStartLocation, enterEndLocation} = props;
   return (
-    <View
-      style={{
-        flex: 1,
-        marginTop: StatusBar.currentHeight ?? 60,
-        paddingHorizontal: 15,
-      }}>
-      <StatusBar
-        backgroundColor={'transparent'}
-        barStyle={'dark-content'}
-        translucent
-      />
-      <ButtonView className="flex-row rounded-full border border-w-1 self-center border-gray-200 shadow-sm items-center pt-3 pb-2 px-2 w-full">
-        <AnimatedIcon
-          autoPlay
-          name="locationPin"
-          style={{width: 30, height: 30}}
-        />
-        <Text tx="home.start_location" />
-      </ButtonView>
-      <DateTimePicker />
-      <ButtonView className="flex-row rounded-full border border-w-1 self-center border-gray-200 shadow-sm items-center pt-3 pb-2 px-2 w-full">
-        <AnimatedIcon
-          autoPlay
-          name="locationPin2"
-          style={{width: 30, height: 30}}
-        />
-        <Text tx="home.start_location" />
-      </ButtonView>
-    </View>
+    <ImageBackground
+      source={ASSET_IMAGES.bg}
+      resizeMode="cover"
+      className="flex-1">
+      <AnimatedBlurView style={styles.blur}>
+        <View className="gap-y-4 justify-evenly" style={styles.container}>
+          <StatusBar
+            backgroundColor={'transparent'}
+            barStyle={'dark-content'}
+            translucent
+          />
+          <SearchLocationView
+            onPress={enterStartLocation}
+            icon="locationPin"
+            title="home.start_location"
+            type="start"
+          />
+          <DateTimeView {...props} />
+          <SearchLocationView
+            onPress={enterEndLocation}
+            icon="locationPin2"
+            title="home.end_location"
+            type="end"
+          />
+          <LoadingButton
+            status={'idle'}
+            titleFromStatusMap={{
+              idle: 'Continue',
+              loading: 'Submitting',
+              success: 'Success',
+              error: 'Declined',
+            }}
+          />
+        </View>
+      </AnimatedBlurView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
+  blur: {flex: 1},
+  container: {
     flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    maxHeight: '80%',
+    marginTop: StatusBar.currentHeight ?? 60,
+    paddingHorizontal: 15,
   },
 });

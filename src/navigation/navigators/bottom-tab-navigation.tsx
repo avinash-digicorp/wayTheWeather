@@ -1,26 +1,48 @@
 import React from 'react';
 import Home from 'screens/home';
 import {routes} from 'navigation/navigation-routes';
-import {Text} from 'components';
 import Notifications from 'screens/notifications';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
+import {
+  AnimatedTabBarNavigator,
+  TabElementDisplayOptions,
+} from 'react-native-animated-nav-tab-bar';
+import TabButton from './partials/tab-button';
+import colors from 'theme';
+import home from 'screens/home/home';
+import AddressSelect from 'screens/address-select';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
 
 export const BottomTabs = () => (
   <TabStack.Navigator
+    appearance={{
+      floating: true,
+      activeTabBackgrounds: colors.primary3,
+      shadow: true,
+      whenActiveShow: TabElementDisplayOptions.ICON_ONLY,
+    }}
     screenOptions={{headerShown: false}}
     initialRouteName={routes.MAIN_HOME}
-    // @ts-ignore
     lazy={true}
     backBehavior="history">
     <TabStack.Screen
       name={routes.MAIN_HOME}
       component={Home}
       options={{
-        tabBarIcon: ({focused, color, size}) => <Text text="❍" />,
+        tabBarIcon: props => (
+          <TabButton {...props} routeName={routes.MAIN_HOME} />
+        ),
+      }}
+    />
+    <TabStack.Screen
+      name={routes.MAIN_WEATHER}
+      component={Home}
+      options={{
+        tabBarIcon: props => (
+          <TabButton {...props} routeName={routes.MAIN_WEATHER} />
+        ),
       }}
     />
 
@@ -28,7 +50,9 @@ export const BottomTabs = () => (
       name={routes.MAIN_SETTINGS}
       component={Notifications}
       options={{
-        tabBarIcon: ({focused, color, size}) => <Text text="⚙️" />,
+        tabBarIcon: props => (
+          <TabButton {...props} routeName={routes.MAIN_SETTINGS} />
+        ),
       }}
     />
   </TabStack.Navigator>
@@ -41,5 +65,10 @@ export const BottomTabNavigator = (
       presentation: 'containedModal',
     }}>
     <Stack.Screen name={routes.MAIN_BOTTOM_TAB} component={BottomTabs} />
+    <Stack.Screen
+      name={routes.ENTER_LOCATION}
+      options={{}}
+      component={AddressSelect}
+    />
   </Stack.Group>
 );

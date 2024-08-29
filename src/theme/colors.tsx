@@ -62,5 +62,5 @@ export default {
   twitter: '#00ACEE',
   info: '#082f49',
   info2: '#bae6fd',
-  info3: '#38bdf8'
-}
+  info3: '#38bdf8',
+};

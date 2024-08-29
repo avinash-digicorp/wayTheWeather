@@ -1,38 +1,30 @@
-import React, {JSXElementConstructor, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Animated,
-  GestureResponderEvent,
-  NativeMethods,
   StyleSheet,
   TouchableHighlight,
-  TouchableHighlightComponent,
-  TouchableMixin,
   TouchableOpacity,
 } from 'react-native';
 import {hitSlop} from 'utils/size';
+import {IProps} from './type.d';
 import colors from 'theme';
-import {IButtonViewProps} from './type.d';
-import {Ripple} from 'components/animations';
-import {Constructor} from 'react-native/types/private/Utilities';
-import {TimerMixin} from 'react-native/types/private/TimerMixin';
 
-export const ButtonView = (props: IButtonViewProps) => {
+export const ButtonView = (props: IProps) => {
   const {
-    withRipple = false,
     hide,
-    loading = false,
+    activeOpacity = 0.8,
     disabled,
     isCard = false,
     applyDisabledStyle = true,
     withHitSlop,
-    button = 'ripple',
+    button = 'normal',
     underlayColor = colors.gray1,
   } = props;
   if (hide) return <React.Fragment />;
 
   const [animatedScale] = useState(new Animated.Value(1));
 
-  const toggleAnimatedScale = (toValue: number) => {
+  const toggleAnimatedScale = toValue => {
     Animated.timing(animatedScale, {
       toValue,
       duration: 100,
@@ -43,15 +35,7 @@ export const ButtonView = (props: IButtonViewProps) => {
   const disabledStyle = applyDisabledStyle && disabled && {opacity: 0.6};
   const styles = [isCard && style.card, disabledStyle, props.style];
   const animatedStyle = {transform: [{scale: animatedScale}]};
-
-  const onPress:
-    | null
-    | ((event: GestureResponderEvent) => void)
-    | undefined = e => {
-    if (!props?.disableAction) return;
-    if (loading) return;
-    props?.onPress?.(e);
-  };
+  const onPress = () => !props?.disableAction && props?.onPress?.();
 
   const buttons = {
     normal: TouchableOpacity,
@@ -60,23 +44,21 @@ export const ButtonView = (props: IButtonViewProps) => {
 
   let ActionButton = buttons[button as keyof typeof buttons];
   return (
-    <Animated.View className={props?.baseClass} style={animatedStyle}>
-      <Ripple withRipple={withRipple} onPress={onPress}>
-        <ActionButton
-          onLongPress={() => toggleAnimatedScale(1)}
-          onPressIn={() => toggleAnimatedScale(props?.scale ?? 0.98)}
-          onPressOut={() => toggleAnimatedScale(1)}
-          activeOpacity={0.9}
-          {...(withHitSlop && {
-            hitSlop: hitSlop(20),
-          })}
-          {...(button === 'highlight' && {underlayColor})}
-          {...props}
-          onPress={withRipple ? null : onPress}
-          style={styles}>
-          {props.children}
-        </ActionButton>
-      </Ripple>
+    <Animated.View className={props?.['base-class']} style={animatedStyle}>
+      <ActionButton
+        activeOpacity={activeOpacity}
+        onLongPress={() => toggleAnimatedScale(1, 2)}
+        onPressIn={() => toggleAnimatedScale(props?.scale ?? 0.98, 0)}
+        onPressOut={() => toggleAnimatedScale(1, 2)}
+        {...(withHitSlop && {
+          hitSlop: hitSlop(20),
+        })}
+        {...(button === 'highlight' && {underlayColor})}
+        {...props}
+        onPress={onPress}
+        style={styles}>
+        {props.children}
+      </ActionButton>
     </Animated.View>
   );
 };

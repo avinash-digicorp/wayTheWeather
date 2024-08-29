@@ -1,48 +1,48 @@
-import {StyleProp, ViewStyle} from 'react-native'
-import {IProps as ButtonViewProps} from '@/components/button-view/type.d'
-import {ASSET_SVGS} from './svg-icons'
+import {StyleProp, ViewStyle} from 'react-native';
+import {IProps as ButtonViewProps} from '@/components/button-view/type.d';
+import {ASSET_SVGS} from './svg-icons';
 
-export interface IProps {
+export interface AssetSvgProps {
   /**
    * Name of SVG icon.
    */
-  name?: keyof typeof ASSET_SVGS
+  name?: keyof typeof ASSET_SVGS;
 
-  preserveAspectRatio?: string
+  preserveAspectRatio?: string;
 
   /**
    * Color of fillable SVG icon.
    */
-  fill?: string
+  fill?: string;
 
   /**
    * Width of SVG icon.
    */
-  width?: number | string
+  width?: number | string;
 
   /**
    * Height of SVG icon.
    */
-  height?: number | string
+  height?: number | string;
 
   /**
    * Styling for the icon container.
    */
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>;
 
   /**
    * Handle the icon will render or not.
    * @default false
    */
-  hide?: boolean
+  hide?: boolean;
 
   /**
    * Additional props to pass to the ButtonView.
    */
-  buttonViewProps?: ButtonViewProps
+  buttonViewProps?: ButtonViewProps;
 
   /**
    * Handle additional non-existing type.
    */
-  [key: string]: string | number | any
+  [key: string]: string | number | any;
 }

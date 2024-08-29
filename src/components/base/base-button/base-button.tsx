@@ -1,14 +1,17 @@
-import {StyleProp, TextStyle, View} from 'react-native'
-import React from 'react'
-import {ButtonView, IButtonViewProps, Text} from 'components'
-import {cn} from 'theme'
+import {StyleProp, TextStyle, View} from 'react-native';
+import React from 'react';
+import {ButtonView, IButtonViewProps, Text} from 'components';
+import {cn} from 'theme';
+import {ITextProps} from 'components/text/type';
 
 export interface IBaseButton extends IButtonViewProps {
-  title?: string
-  baseClass?: string
-  className?: string
-  titleClass?: string
-  titleStyle?: StyleProp<TextStyle> | undefined
+  title?: string;
+  baseClass?: string;
+  className?: string;
+  titleClass?: string;
+  titleStyle?: StyleProp<TextStyle> | undefined;
+  tx?: ITextProps['tx'];
+  txOptions?: ITextProps['txOptions'];
 }
 
 export const BaseButton = (props: IBaseButton) => {
@@ -20,18 +23,20 @@ export const BaseButton = (props: IBaseButton) => {
     titleClass,
     onPress,
     style,
-    titleStyle
-  } = props
-  const baseClasses = cn([baseClass, 'w-full py-4 items-center'])
+    titleStyle,
+    tx,
+    txOptions,
+  } = props;
+  const baseClasses = cn([baseClass, 'w-full py-4 items-center']);
   const buttonClasses = cn([
     'w-full px-4 py-3 rounded-full bg-primary border border-primary items-center flex-row',
-    className
-  ])
+    className,
+  ]);
   const titleClasses = cn([
     'text-center px-2 text-white font-semi-bold',
-    titleClass
-  ])
-  const titleText = title
+    titleClass,
+  ]);
+  const titleText = title;
   return (
     <View className={baseClasses}>
       <ButtonView
@@ -39,8 +44,14 @@ export const BaseButton = (props: IBaseButton) => {
         onPress={onPress}
         className={buttonClasses}
         style={style}>
-        <Text style={titleStyle} className={titleClasses} text={titleText} />
+        <Text
+          style={titleStyle}
+          className={titleClasses}
+          txOptions={txOptions}
+          tx={tx}
+          text={titleText}
+        />
       </ButtonView>
     </View>
-  )
-}
+  );
+};
