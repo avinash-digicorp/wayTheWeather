@@ -16,7 +16,7 @@ import {cn} from 'theme';
 interface HeaderProps {
   title?: ITextProps['tx'];
   titleClassName?: string;
-  className?: string;
+  containerClassName?: string;
   onTitlePress?: () => void;
   onLeftPress?: () => void;
   onRightPress?: () => void;
@@ -25,8 +25,14 @@ interface HeaderProps {
   withBack?: boolean;
 }
 export const Header = (props: HeaderProps) => {
-  const {withBack, className, onLeftPress, onRightPress, rightIcon, leftIcon} =
-    props;
+  const {
+    withBack,
+    containerClassName,
+    onLeftPress,
+    onRightPress,
+    rightIcon,
+    leftIcon,
+  } = props;
   const navigation = useNavigation();
   const onLeftPressHandler = isFunctionExist(onLeftPress)
     ? onLeftPress
@@ -38,7 +44,7 @@ export const Header = (props: HeaderProps) => {
       style={styles.container}
       className={cn([
         'w-full pb-4 flex-row items-center justify-between',
-        className,
+        containerClassName,
       ])}>
       <ButtonView style={styles.iconSpace} onPress={onLeftPressHandler}>
         <AssetSvg

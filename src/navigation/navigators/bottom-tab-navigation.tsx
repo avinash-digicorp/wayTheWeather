@@ -9,8 +9,9 @@ import {
 } from 'react-native-animated-nav-tab-bar';
 import TabButton from './partials/tab-button';
 import colors from 'theme';
-import home from 'screens/home/home';
 import AddressSelect from 'screens/address-select';
+import {WeatherTracking} from 'screens/weather-tracking';
+import {Weather} from 'screens/weather';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
@@ -38,7 +39,7 @@ export const BottomTabs = () => (
     />
     <TabStack.Screen
       name={routes.MAIN_WEATHER}
-      component={Home}
+      component={Weather}
       options={{
         tabBarIcon: props => (
           <TabButton {...props} routeName={routes.MAIN_WEATHER} />
@@ -69,6 +70,11 @@ export const BottomTabNavigator = (
       name={routes.ENTER_LOCATION}
       options={{}}
       component={AddressSelect}
+    />
+    <Stack.Screen
+      name={routes.WEATHER_TRACKING}
+      options={{animation: 'flip', gestureEnabled: true}}
+      component={WeatherTracking}
     />
   </Stack.Group>
 );

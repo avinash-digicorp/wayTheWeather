@@ -3,7 +3,7 @@ export default {
   primary: '#189AB4',
   primary2: '#05445E',
   primary3: '#D4F1F4',
-  primary4: 'rgba(6, 95, 70, 0.4)',
+  primary4: '#3cc9e6',
   primary5: '#10B981',
   primary6: '#6EE7B7',
   primary7: '#047857',

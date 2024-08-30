@@ -13,15 +13,14 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import {LoadingButtonLoader, type ActivityStatus} from './loading-button';
 import {haptic} from 'utils';
 import colors from 'theme';
 
 type LoadingButtonProps = {
   onPress?: () => Promise<void>;
   style?: StyleProp<ViewStyle>;
-  status: ActivityStatus;
-  titleFromStatusMap?: Record<ActivityStatus, string>;
+  status: string;
+  titleFromStatusMap?: any;
 };
 
 const MotifiedAnimatedText = motify(Animated.Text)();
@@ -34,7 +33,7 @@ const colorFromStatusMap = {
 
 const LoadingButton: React.FC<LoadingButtonProps> = props => {
   const {onPress, style, status, titleFromStatusMap} = props;
-  const [currentStatus, setCurrentStatus] = useState<ActivityStatus>(status);
+  const [currentStatus, setCurrentStatus] = useState(status);
   const isActive = useSharedValue(false);
   useEffect(() => {
     setCurrentStatus(status);
@@ -91,8 +90,6 @@ const LoadingButton: React.FC<LoadingButtonProps> = props => {
             animate={{
               backgroundColor: activeColor,
             }}>
-            <LoadingButtonLoader status={currentStatus} color={'white'} />
-
             <MotifiedAnimatedText
               entering={FadeIn}
               exiting={FadeOut}

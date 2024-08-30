@@ -32,8 +32,6 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -48,5 +46,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>wayTheWeather needs to access your location to show you nearby meals.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>wayTheWeather needs to access your location to show you nearby meals.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>wayTheWeather needs to access your location to show you nearby meals.</string>
 </dict>
 </plist>

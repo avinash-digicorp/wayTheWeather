@@ -13,4 +13,5 @@ export const routes = {
   // Other navigation
   ENTER_LOCATION: 'ENTER_LOCATION',
   LOST_CONNECTION: 'LOST_CONNECTION',
+  WEATHER_TRACKING: 'WEATHER_TRACKING',
 };

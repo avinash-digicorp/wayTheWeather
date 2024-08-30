@@ -1,11 +1,13 @@
-import {AnyAction, combineReducers} from 'redux'
-import authSlice from './auth/slice'
+import {AnyAction, combineReducers} from 'redux';
+import authSlice from './auth/slice';
+import commonSlice from './common/slice';
 
-export const RESET_STATE = 'RESET_STATE'
+export const RESET_STATE = 'RESET_STATE';
 
 const appReducer = combineReducers({
-  auth: authSlice
-})
+  auth: authSlice,
+  common: commonSlice,
+});
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === RESET_STATE) {
@@ -16,11 +18,11 @@ const rootReducer = (state: any, action: AnyAction) => {
       contacts: undefined,
       card: undefined,
       notification: undefined,
-      payment: undefined
-    }
+      payment: undefined,
+    };
   }
 
-  return appReducer(state, action)
-}
+  return appReducer(state, action);
+};
 
-export default rootReducer
+export default rootReducer;

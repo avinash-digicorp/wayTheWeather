@@ -8,7 +8,13 @@ import {AnimatedBlurView, LoadingButton} from 'components';
 
 export default () => {
   const props = useHomeContainer();
-  const {enterStartLocation, enterEndLocation} = props;
+  const {
+    enterStartLocation,
+    startLocationTitle,
+    endLocationTitle,
+    enterEndLocation,
+    onSubmit,
+  } = props;
   return (
     <ImageBackground
       source={ASSET_IMAGES.bg}
@@ -22,6 +28,7 @@ export default () => {
             translucent
           />
           <SearchLocationView
+            address={startLocationTitle}
             onPress={enterStartLocation}
             icon="locationPin"
             title="home.start_location"
@@ -29,6 +36,7 @@ export default () => {
           />
           <DateTimeView {...props} />
           <SearchLocationView
+            address={endLocationTitle}
             onPress={enterEndLocation}
             icon="locationPin2"
             title="home.end_location"
@@ -36,6 +44,7 @@ export default () => {
           />
           <LoadingButton
             status={'idle'}
+            onPress={onSubmit}
             titleFromStatusMap={{
               idle: 'Continue',
               loading: 'Submitting',
