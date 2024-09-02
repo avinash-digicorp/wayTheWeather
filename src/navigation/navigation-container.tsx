@@ -39,7 +39,7 @@ export const useAppNavigationContainer = () => {
     return () => {};
   }, [isLoggedIn, routeName]);
   useEffect(() => {
-    dispatch(fetchCurrentLocation());
+    // dispatch(fetchCurrentLocation());
   }, []);
   useEffect(() => {
     if (!location) return;

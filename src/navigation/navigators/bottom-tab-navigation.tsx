@@ -12,6 +12,7 @@ import colors from 'theme';
 import AddressSelect from 'screens/address-select';
 import {WeatherTracking} from 'screens/weather-tracking';
 import {Weather} from 'screens/weather';
+import Test from 'screens/test';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,12 +26,12 @@ export const BottomTabs = () => (
       whenActiveShow: TabElementDisplayOptions.ICON_ONLY,
     }}
     screenOptions={{headerShown: false}}
-    initialRouteName={routes.MAIN_HOME}
+    initialRouteName={routes.MAIN_TEST}
     lazy={true}
     backBehavior="history">
     <TabStack.Screen
       name={routes.MAIN_HOME}
-      component={Home}
+      component={AddressSelect}
       options={{
         tabBarIcon: props => (
           <TabButton {...props} routeName={routes.MAIN_HOME} />
@@ -39,7 +40,7 @@ export const BottomTabs = () => (
     />
     <TabStack.Screen
       name={routes.MAIN_WEATHER}
-      component={Weather}
+      component={AddressSelect}
       options={{
         tabBarIcon: props => (
           <TabButton {...props} routeName={routes.MAIN_WEATHER} />
@@ -53,6 +54,15 @@ export const BottomTabs = () => (
       options={{
         tabBarIcon: props => (
           <TabButton {...props} routeName={routes.MAIN_SETTINGS} />
+        ),
+      }}
+    />
+    <TabStack.Screen
+      name={routes.MAIN_TEST}
+      component={Test}
+      options={{
+        tabBarIcon: props => (
+          <TabButton {...props} routeName={routes.MAIN_TEST} />
         ),
       }}
     />

@@ -9,6 +9,7 @@ export const routes = {
   MAIN_HOME: 'Home',
   MAIN_WEATHER: 'Weather',
   MAIN_SETTINGS: 'Settings',
+  MAIN_TEST: 'Test',
 
   // Other navigation
   ENTER_LOCATION: 'ENTER_LOCATION',

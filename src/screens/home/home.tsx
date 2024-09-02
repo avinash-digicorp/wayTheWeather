@@ -42,16 +42,6 @@ export default () => {
             title="home.end_location"
             type="end"
           />
-          <LoadingButton
-            status={'idle'}
-            onPress={onSubmit}
-            titleFromStatusMap={{
-              idle: 'Continue',
-              loading: 'Submitting',
-              success: 'Success',
-              error: 'Declined',
-            }}
-          />
         </View>
       </AnimatedBlurView>
     </ImageBackground>

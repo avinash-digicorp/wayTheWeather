@@ -13,8 +13,8 @@ export const useAddressSelectContainer = () => {
   const [addressList, setAddressList] = useState([]);
   const [fetching, setFetching] = useState(false);
   const route = useRoute();
-  const {value, onAddressSelect = () => {}}: any = route.params;
-
+  const value = route.params?.value;
+  const onAddressSelect = route.params?.onAddressSelect;
   useEffect(() => {
     onChangeText(value);
   }, [value]);

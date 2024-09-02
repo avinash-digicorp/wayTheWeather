@@ -1362,29 +1362,6 @@ PODS:
     - React
   - react-native-safe-area-context (4.10.9):
     - React-Core
-  - react-native-skia (1.3.10):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React
-    - React-callinvoker
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - react-native-video (6.4.5):
     - DoubleConversion
     - glog
@@ -1430,6 +1407,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SPTPersistentCache (~> 1.1.0)
     - Yoga
+  - react-native-view-shot (3.8.0):
+    - React-Core
   - React-nativeconfig (0.75.1)
   - React-NativeModulesApple (0.75.1):
     - glog
@@ -1690,6 +1669,8 @@ PODS:
     - React-logger (= 0.75.1)
     - React-perflogger (= 0.75.1)
     - React-utils (= 0.75.1)
+  - rn-fetch-blob (0.12.0):
+    - React-Core
   - RNCAsyncStorage (1.24.0):
     - React-Core
   - RNDateTimePicker (8.2.0):
@@ -1715,6 +1696,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNFS (2.20.0):
+    - React-Core
   - RNGestureHandler (2.18.1):
     - DoubleConversion
     - glog
@@ -1846,6 +1829,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNShare (10.2.1):
+    - React-Core
   - RNSVG (15.4.0):
     - React-Core
   - SocketRocket (0.7.0)
@@ -1900,8 +1885,8 @@ DEPENDENCIES:
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-network-info (from `../node_modules/react-native-network-info`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
   - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1928,14 +1913,17 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -2039,10 +2027,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-network-info"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-skia:
-    :path: "../node_modules/@shopify/react-native-skia"
   react-native-video:
     :path: "../node_modules/react-native-video"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -2095,12 +2083,16 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFlashList:
     :path: "../node_modules/@shopify/flash-list"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNPermissions:
@@ -2111,6 +2103,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   Yoga:
@@ -2166,8 +2160,8 @@ SPEC CHECKSUMS:
   react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
   react-native-network-info: d1290ffc0bd0709e11436f5b8d7f605dcc5c4530
   react-native-safe-area-context: ab8f4a3d8180913bd78ae75dd599c94cce3d5e9a
-  react-native-skia: 437a819950c83d17eddf4e234cc12d0a83c7c7f8
   react-native-video: f1b6afcf5e7fda6929b351c2318d30ab5d90ed60
+  react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   React-nativeconfig: 174354b3e91ae72f95f1e4cb7c66af1b70209dd2
   React-NativeModulesApple: 81a10481d8d1ff9e1ba92cb96b986076d14b6672
   React-perflogger: 7c4e97b47d8bc58c03fad1a6b97d96181b59aa41
@@ -2194,19 +2188,22 @@ SPEC CHECKSUMS:
   React-utils: 7bc806f589085dcc341cb005b03620cf4394eb31
   ReactCodegen: 8a76b467a05b55b3487fc7499c4cc1ec6fe453de
   ReactCommon: 8eeefff0ead38a399e90e275ddc15f489c172725
+  rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNDateTimePicker: 40ffda97d071a98a10fdca4fa97e3977102ccd14
   RNFlashList: 997257a094906e3e254183ef90fcf7a5a6a2612d
+  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 634189dbe31ecedf6e75c0d8b5ec5ae208850074
   RNPermissions: 648742a291aaff4f793b6077d4af313f4bceacd8
   RNReactNativeHapticFeedback: 5ae6ca462509e4dcba5d6b1f70e272831972724c
   RNReanimated: 33fe715a3f3c39cae412fe448090b42d1b0949cf
   RNScreens: de55b9d7de8a017d1588dcb70415492d0b0597c2
+  RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: cb24fb322de8c1ebf59904e7aca0447bb8dbed5a
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SPTPersistentCache: df36ea46762d7cf026502bbb86a8b79d0080dff4
   Yoga: 3dcf70785fde807153d1dba2a7ec35102526d9bf
 
-PODFILE CHECKSUM: 82b2b2f606a387a90fcf9c3c71f3455ca2dae7da
+PODFILE CHECKSUM: c6cee402a44a23c0e7317cf4a4d7ed986dbf9be0
 
 COCOAPODS: 1.15.2
