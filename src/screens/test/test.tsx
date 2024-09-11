@@ -16,7 +16,8 @@ import ViewShot, {captureRef} from 'react-native-view-shot';
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
 import moment from 'moment';
-import {isAndroidPlatform} from 'utils';
+import {isAndroidPlatform, isIosPlatform} from 'utils';
+import {PERMISSIONS, request} from 'react-native-permissions';
 
 export default () => {
   const [images, setImages] = useState([]);
@@ -101,6 +102,12 @@ export default () => {
     }
   };
   const requestStoragePermission = async () => {
+    if (isIosPlatform) {
+      const permission = await request(PERMISSIONS.IOS.MEDIA_LIBRARY);
+      console.log('permission', permission);
+
+      return permission === 'granted';
+    }
     try {
       const granted = await PermissionsAndroid.requestMultiple(
         [

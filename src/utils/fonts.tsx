@@ -5,5 +5,6 @@ export const fonts = {
   light: 'Poppins-Light',
   medium: 'Poppins-Medium',
   regular: 'Poppins-Regular',
-  semiBold: 'Poppins-SemiBold'
-}
+  semiBold: 'Poppins-SemiBold',
+  thin: 'Poppins-Thin',
+};

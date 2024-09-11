@@ -66,7 +66,7 @@ export const fetchWeather = async (location: LocationTypes) => {
     };
     const url = `${WEATHER_API_URL}?${objectToQueryString(params)}`;
 
-    return null;
+    // return null;
     const response = await axios.get(url);
 
     if (response.status === 200) {

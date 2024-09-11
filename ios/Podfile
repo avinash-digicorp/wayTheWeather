@@ -19,6 +19,7 @@ setup_permissions([
   'Notifications',
   'LocationAlways',
   'LocationWhenInUse',
+  'MediaLibrary',
 ])
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil

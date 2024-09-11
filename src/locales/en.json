@@ -24,5 +24,9 @@
     "login": "Login",
     "cancel": "Cancel",
     "whether_for_trip": "Check Whether For Trip"
+  },
+  "weather": {
+    "high": "High",
+    "low": "Low"
   }
 }
