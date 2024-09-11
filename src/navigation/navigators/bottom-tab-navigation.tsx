@@ -13,6 +13,8 @@ import AddressSelect from 'screens/address-select';
 import {WeatherTracking} from 'screens/weather-tracking';
 import {Weather} from 'screens/weather';
 import Test from 'screens/test';
+import {Chat} from 'screens/chat';
+import {Todo} from 'screens/todo';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
@@ -50,7 +52,7 @@ export const BottomTabs = () => (
 
     <TabStack.Screen
       name={routes.MAIN_SETTINGS}
-      component={Notifications}
+      component={Todo}
       options={{
         tabBarIcon: props => (
           <TabButton {...props} routeName={routes.MAIN_SETTINGS} />
@@ -73,7 +75,6 @@ export const BottomTabNavigator = (
   <Stack.Group
     screenOptions={{
       headerShown: false,
-      presentation: 'containedModal',
     }}>
     <Stack.Screen name={routes.MAIN_BOTTOM_TAB} component={BottomTabs} />
     <Stack.Screen
@@ -86,5 +87,34 @@ export const BottomTabNavigator = (
       options={{animation: 'flip', gestureEnabled: true}}
       component={WeatherTracking}
     />
+    <Stack.Screen
+      name={routes.CHAT}
+      options={{
+        animation: 'fade',
+        animationDuration: 300,
+        animationTypeForReplace: 'push',
+      }}
+      component={Chat}
+    />
   </Stack.Group>
 );
+
+const opacityTransition: object = {
+  gestureDirection: 'horizontal', // we will swipe right if we want to close the screen;
+  transitionSpec: {
+    open: {
+      animation: 'timing',
+    },
+    close: {
+      animation: 'timing',
+      config: {
+        duration: 3000,
+      },
+    },
+  },
+  cardStyleInterpolator: ({current}: {current: {progress: number}}) => ({
+    cardStyle: {
+      opacity: current.progress,
+    },
+  }),
+};

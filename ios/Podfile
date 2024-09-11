@@ -14,6 +14,11 @@ require_relative '../node_modules/react-native-permissions/scripts/setup'
 use_frameworks! :linkage => :static
 
 platform :ios, min_ios_version_supported
+pod 'Firebase', :modular_headers => true
+pod 'FirebaseCoreInternal', :modular_headers => true
+pod 'GoogleUtilities', :modular_headers => true
+pod 'FirebaseCore', :modular_headers => true
+
 prepare_react_native_project!
 setup_permissions([
   'Notifications',
@@ -30,7 +35,6 @@ end
 target 'wayTheWeather' do
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
-  pod 'GoogleUtilities', :modular_headers => true;
   pod 'RNFS', :path => '../node_modules/react-native-fs'
   
   config = use_native_modules!

@@ -18,9 +18,14 @@ import Share from 'react-native-share';
 import moment from 'moment';
 import {isAndroidPlatform, isIosPlatform} from 'utils';
 import {PERMISSIONS, request} from 'react-native-permissions';
+import AddButton from './partials/add-button';
+import {routes} from 'navigation';
 
-export default () => {
+export default ({navigation}) => {
   const [images, setImages] = useState([]);
+  const onAdd = () => {
+    navigation.navigate(routes.CHAT);
+  };
   const viewRef = useRef<ViewShot>(null);
   const share = async () => {
     if (viewRef.current) {
@@ -184,6 +189,7 @@ export default () => {
             </View>
           </ScrollView>
         </View>
+        <AddButton onAdd={onAdd} />
       </SafeAreaView>
     </View>
   );
