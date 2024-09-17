@@ -2,7 +2,7 @@ import ChatMessageBox from '../partials2/ChatMessageBox';
 import ReplyMessageBar from '../partials2/ReplyMessageBar';
 import colors from 'theme';
 import React, {useState, useCallback, useEffect, useRef} from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
 import {
   GiftedChat,

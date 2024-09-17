@@ -3307,6 +3307,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-firebase/database@npm:^20.5.0":
+  version: 20.5.0
+  resolution: "@react-native-firebase/database@npm:20.5.0"
+  peerDependencies:
+    "@react-native-firebase/app": 20.5.0
+  checksum: aa103e9ce14e362b58dd6baf7b75136fa27344e1bc795d2c4e4b28f4341caaa30aa840af20494d5d42b5dff684d31a22df4b9faa843efc5f0d637612286160a0
+  languageName: node
+  linkType: hard
+
+"@react-native-firebase/firestore@npm:^20.5.0":
+  version: 20.5.0
+  resolution: "@react-native-firebase/firestore@npm:20.5.0"
+  peerDependencies:
+    "@react-native-firebase/app": 20.5.0
+  checksum: d46e799a07a985eb477ecea1973d44d7316331f3244b2626468230c1f4c97f69f7724afeb7515aaddfa33ef3dd851689936b69dd447cbc3e45a59d90c779c6a2
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.75.1":
   version: 0.75.1
   resolution: "@react-native/assets-registry@npm:0.75.1"
@@ -12459,6 +12477,8 @@ __metadata:
     "@react-native-community/geolocation": ^3.3.0
     "@react-native-community/netinfo": ^11.3.2
     "@react-native-firebase/app": ^20.5.0
+    "@react-native-firebase/database": ^20.5.0
+    "@react-native-firebase/firestore": ^20.5.0
     "@react-native/babel-preset": 0.75.1
     "@react-native/eslint-config": 0.75.1
     "@react-native/metro-config": 0.75.1

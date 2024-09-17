@@ -1,18 +1,13 @@
 import firebase from '@react-native-firebase/app';
-import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 
-// Optionally configure Firebase services to use, if you're using Firebase Realtime Database or other services.
+// Optionally configure Firebase services
 const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_AUTH_DOMAIN',
-  projectId: 'YOUR_PROJECT_ID',
-  storageBucket: 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  appId: 'YOUR_APP_ID',
+  apiKey: 'AIzaSyAl65orcjSSQ_bUch9X0e4zZgxyVVe7t9w',
+  projectId: 'way-the-weather',
+  appId: 'com.waytheweather',
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+firebase.initializeApp(firebaseConfig);
 
-export {firestore};
+export {database};

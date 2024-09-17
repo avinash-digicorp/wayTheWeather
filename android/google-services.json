@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677701367553",
+    "project_id": "way-the-weather",
+    "storage_bucket": "way-the-weather.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677701367553:android:1b3b09bbc531471fe8cd00",
+        "android_client_info": {
+          "package_name": "com.waytheweather"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl65orcjSSQ_bUch9X0e4zZgxyVVe7t9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,6 @@
+import {database} from 'config/config-firebase';
 import React, {useState, useEffect} from 'react';
+
 import {
   View,
   TextInput,
@@ -8,42 +10,43 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-// import { firestore } from './firebaseConfig';
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
 
-  // Fetch todos from Firestore when the component mounts
+  // Fetch todos from Realtime Database when the component mounts
   useEffect(() => {
-    return;
-    const unsubscribe = firestore()
-      .collection('todos')
-      .onSnapshot(snapshot => {
-        const todoList = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setTodos(todoList);
+    const onValueChange = database()
+      .ref(`/todos`)
+      .on('value', snapshot => {
+        console.log('todos data: ', snapshot.val());
       });
 
-    return () => unsubscribe(); // Cleanup when unmounting
+    return () => database().ref(`/todos`).off('value', onValueChange);
   }, []);
 
-  // Add a new todo to Firestore
+  // Add a new todo to Realtime Database
   const addTodo = async () => {
-    if (newTodo.trim()) {
-      await firestore().collection('todos').add({
-        title: newTodo,
-        completed: false,
-      });
-      setNewTodo(''); // Clear the input after adding
+    try {
+      if (newTodo.trim()) {
+        const newTodoRef = database().ref('/todos').push();
+        const data = await newTodoRef.set({
+          title: newTodo,
+          completed: false,
+        });
+        console.log('data', data);
+
+        setNewTodo(''); // Clear the input after adding
+      }
+    } catch (e) {
+      console.log('e', e);
     }
   };
 
-  // Delete a todo from Firestore
+  // Delete a todo from Realtime Database
   const deleteTodo = async id => {
-    await firestore().collection('todos').doc(id).delete();
+    await database().ref(`/todos/${id}`).remove();
   };
 
   // Render each Todo item
