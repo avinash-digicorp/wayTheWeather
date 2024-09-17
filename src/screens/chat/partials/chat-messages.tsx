@@ -14,12 +14,16 @@ import {
 } from 'react-native-gifted-chat';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import messageData from '../partials2/message-data.json';
-import {AssetSvg} from 'components';
+import {AssetSvg, ButtonView, FadeIn, Text} from 'components';
+import {TouchableOpacity} from 'react-native';
+import moment from 'moment';
 
-const ChatMessages = () => {
+const ChatMessages = props => {
+  const {longPressedMessageId, setLongPressedMessageId} = props;
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [text, setText] = useState('');
   const insets = useSafeAreaInsets();
+  console.log('longPressedMessageId', longPressedMessageId);
 
   const [replyMessage, setReplyMessage] = useState<IMessage | null>(null);
   const swipeableRowRef = useRef<Swipeable | null>(null);
@@ -30,6 +34,7 @@ const ChatMessages = () => {
         return {
           _id: message.id,
           text: message.msg,
+          reactions: ['👍', '👎'],
           createdAt: new Date(message.date),
           user: {
             _id: message.from,
@@ -41,6 +46,7 @@ const ChatMessages = () => {
         _id: 0,
         system: true,
         text: 'All your base are belong to us',
+        reactions: ['😊'],
         createdAt: new Date(),
         user: {
           _id: 0,
@@ -96,6 +102,9 @@ const ChatMessages = () => {
     }
   }, [replyMessage]);
 
+  const onLongPress = (context, message) => {
+    setLongPressedMessageId(message._id);
+  };
   return (
     <View
       style={{
@@ -106,34 +115,93 @@ const ChatMessages = () => {
         messages={messages}
         onSend={(messages: any) => onSend(messages)}
         onInputTextChanged={setText}
-        user={{
-          _id: 1,
-        }}
+        user={{_id: 1}}
+        onLongPress={onLongPress}
         renderSystemMessage={props => (
-          <SystemMessage {...props} textStyle={{color: colors.gray5}} />
+          <SystemMessage
+            {...props}
+            wrapperStyle={{
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              backgroundColor: colors.white,
+              shadowColor: '#000',
+              shadowOffset: {width: 0, height: 1},
+              shadowOpacity: 0.22,
+              shadowRadius: 2.22,
+              elevation: 3,
+              borderRadius: 15,
+            }}
+            textStyle={{color: colors.gray7}}
+          />
         )}
+        renderDay={props => {
+          const isToday = moment(props?.currentMessage?.createdAt).isSame(
+            new Date(),
+            'day',
+          );
+          const isYesterday = moment(props?.currentMessage?.createdAt).isSame(
+            new Date(),
+            'day',
+          );
+          const timeFormat = isToday
+            ? 'hh:mm A'
+            : isYesterday
+            ? 'Yesterday hh:mm A'
+            : 'DD MM YYYY hh:mm A';
+          const date = moment(props?.currentMessage?.createdAt).format(
+            timeFormat,
+          );
+          return (
+            <View
+              style={{
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                backgroundColor: colors.white,
+                shadowColor: '#000',
+                shadowOffset: {width: 0, height: 1},
+                shadowOpacity: 0.22,
+                shadowRadius: 2.22,
+                elevation: 3,
+                borderRadius: 15,
+                alignSelf: 'center',
+              }}>
+              <Text text={date} className="text-xs" />
+            </View>
+          );
+        }}
         bottomOffset={insets.bottom}
         renderAvatar={null}
         maxComposerHeight={100}
         textInputProps={styles.composer}
         renderBubble={props => {
           return (
-            <Bubble
-              {...props}
-              textStyle={{
-                right: {
-                  color: '#000',
-                },
-              }}
-              wrapperStyle={{
-                left: {
-                  backgroundColor: '#fff',
-                },
-                right: {
-                  backgroundColor: colors.primary3,
-                },
-              }}
-            />
+            <>
+              <Bubble
+                {...props}
+                textStyle={{right: {color: colors.gray8}}}
+                wrapperStyle={{
+                  left: {backgroundColor: '#fff'},
+                  right: {backgroundColor: colors.primary3},
+                }}
+              />
+              {/* Display the reaction if present */}
+              {props?.currentMessage?.reactions?.map?.((reaction, index) => (
+                <View
+                  key={index}
+                  style={{
+                    position: 'absolute',
+                    bottom: 10,
+                    right: 10,
+                    backgroundColor: colors.primary3,
+                    borderRadius: 10,
+                  }}>
+                  <Text text={reaction} />
+                </View>
+              ))}
+              {longPressedMessageId === props.currentMessage._id && (
+                <RenderEmojiPicker id={props.currentMessage._id} />
+              )}
+            </>
           );
         }}
         renderSend={props => (
@@ -163,14 +231,23 @@ const ChatMessages = () => {
             )}
           </View>
         )}
+        scrollToBottomComponent={() => (
+          <FadeIn>
+            <ButtonView className="border bg-white border-gray-200 h-10 w-10 rounded-full items-center justify-center">
+              <AssetSvg name="location" />
+            </ButtonView>
+          </FadeIn>
+        )}
         renderInputToolbar={renderInputToolbar}
         renderChatFooter={() => (
-          <ReplyMessageBar
-            clearReply={() => setReplyMessage(null)}
-            message={replyMessage}
-          />
+          <>
+            <ReplyMessageBar
+              clearReply={() => setReplyMessage(null)}
+              message={replyMessage}
+            />
+          </>
         )}
-        onLongPress={(context, message) => setReplyMessage(message)}
+        // onLongPress={(context, message) => setReplyMessage(message)}
         renderMessage={props => (
           <ChatMessageBox
             {...props}
@@ -184,16 +261,34 @@ const ChatMessages = () => {
 };
 
 const styles = StyleSheet.create({
-  composer: {
+  emojiContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 10,
     backgroundColor: '#fff',
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.gray2,
-    paddingHorizontal: 10,
-    paddingTop: 8,
-    fontSize: 16,
-    marginVertical: 4,
+    borderRadius: 5,
+    padding: 5,
+    elevation: 5,
+    position: 'absolute',
+  },
+  composer: {
+    backgroundColor: 'transparent',
   },
 });
 
 export default ChatMessages;
+
+const RenderEmojiPicker = ({id, show = false}) => {
+  console.log('show', show);
+
+  // if (!show) return null;
+  return (
+    <View style={styles.emojiContainer}>
+      {['😊', '😂', '😍', '😢', '😡'].map((emoji, index) => (
+        <TouchableOpacity key={index}>
+          <Text text={emoji} />
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};

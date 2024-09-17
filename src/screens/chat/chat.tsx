@@ -41,6 +41,7 @@ import {SCREEN_WIDTH} from 'utils';
 import {StyleSheet} from 'react-native';
 import {fonts} from 'utils/fonts';
 import ChatMessages from './partials/chat-messages';
+import {AssetSvg, ButtonView, FadeIn} from 'components';
 const AnimPressable = Animated.createAnimatedComponent(Pressable);
 const DELAY_LONG_PRESS = isIosPlatform ? 250 : 150; //Default is 500ms
 
@@ -67,6 +68,7 @@ export const Chat = () => {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [captureUri, setCaptureUri] = useState<string | null>(null);
+  const [longPressedMessageId, setLongPressedMessageId] = useState(null);
   const [clonedItem, setClonedItem] = useState<{
     id: string;
     top: number | null;
@@ -123,7 +125,11 @@ export const Chat = () => {
   }, []);
 
   const scrollToFirstItem = React.useCallback(() => {
-    listRef.current?.scrollToIndex({index: 0, animated: true});
+    try {
+      listRef.current?.scrollToEnd({animated: true});
+    } catch (e) {
+      console.log({e});
+    }
   }, []);
 
   const onScroll = React.useCallback(
@@ -210,28 +216,11 @@ export const Chat = () => {
 
       <View style={styles.container}>
         <ChatScreenHeader />
-
         <Animated.View style={[translateList, {flex: 1}]}>
-          {/* <FlatList
-            style={{paddingTop: 15}}
-            ref={listRef}
-            data={messages}
-            onScroll={onScroll}
-            renderItem={({item, index}: {item: Message; index: number}) => (
-              <MessageItem
-                key={index}
-                item={item}
-                scrollY={scrollY}
-                capture={capture}
-                handleKeyboard={handleKeyboard}
-                scrollToFirstItem={scrollToFirstItem}
-              />
-            )}
-            keyboardShouldPersistTaps="handled"
-            keyExtractor={item => `message-${item.id}`}
-          /> */}
-
-          <ChatMessages />
+          <ChatMessages
+            longPressedMessageId={longPressedMessageId}
+            setLongPressedMessageId={setLongPressedMessageId}
+          />
           <ChatInput
             input={input}
             inputRef={inputRef}

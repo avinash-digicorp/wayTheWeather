@@ -1,11 +1,12 @@
 import React, {memo} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {AssetSvg, ButtonView, Text} from 'components';
+import {goBack} from 'navigation';
 
 export default memo(() => (
   <View style={styles.container} className="shadow-xl">
     <View className="flex-row items-center gap-3">
-      <ButtonView>
+      <ButtonView onPress={goBack}>
         <AssetSvg name="left_arrow" width={24} height={24} />
       </ButtonView>
       <Image

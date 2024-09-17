@@ -3,7 +3,8 @@
     "id": "6139e7c6580e9b39d1c6bd79",
     "from": 1,
     "date": "Wed Aug 25 2021 04:34:39 GMT+0200 (Central European Summer Time)",
-    "msg": "Et nulla tempor nulla minim in veniam excepteur nisi deserunt cupidatat commodo reprehenderit duis pariatur. Eu ullamco velit minim cupidatat sit nisi laborum."
+    "msg": "Et nulla tempor nulla minim in veniam excepteur nisi deserunt cupidatat commodo reprehenderit duis pariatur. Eu ullamco velit minim cupidatat sit nisi laborum.",
+    "reactions": ["👍", "👎"]
   },
   {
     "id": "6139e7c645df995d423a0c61",
@@ -171,19 +172,22 @@
     "id": "6139e7c67084a40c3adbe65e",
     "from": 0,
     "date": "Thu Aug 26 2021 09:31:50 GMT+0200 (Central European Summer Time)",
-    "msg": "Pariatur Lorem laboris aute tempor consectetur deserunt. Ullamco nostrud occaecat Lorem exercitation sit minim dolor."
+    "msg": "Pariatur Lorem laboris aute tempor consectetur deserunt. Ullamco nostrud occaecat Lorem exercitation sit minim dolor.",
+    "reactions": ["👍"]
   },
   {
     "id": "6139e7c62333a40c3adbe65e",
     "from": 0,
     "date": "Thu Aug 26 2021 11:31:50 GMT+0200 (Central European Summer Time)",
     "msg": "Check out this image!",
-    "img": "https://i0.wp.com/ionicacademy.com/wp-content/uploads/2019/09/simon_insta.jpg"
+    "img": "https://i0.wp.com/ionicacademy.com/wp-content/uploads/2019/09/simon_insta.jpg",
+    "reactions": ["😊", "😊", "👍"]
   },
   {
     "id": "6139e7c6364562bd5ae10297",
     "from": 0,
     "date": "Thu Sep 02 2021 06:12:56 GMT+0200 (Central European Summer Time)",
-    "msg": "Proident qui do consequat labore magna amet reprehenderit do id. Eiusmod sunt fugiat aliquip sunt excepteur reprehenderit."
+    "msg": "Proident qui do consequat labore magna amet reprehenderit do id. Eiusmod sunt fugiat aliquip sunt excepteur reprehenderit.",
+    "reactions": ["😊"]
   }
 ]
