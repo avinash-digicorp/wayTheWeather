@@ -2,11 +2,10 @@ import ChatMessageBox from '../partials2/ChatMessageBox';
 import ReplyMessageBar from '../partials2/ReplyMessageBar';
 import colors from 'theme';
 import React, {useState, useCallback, useEffect, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
 import {
   GiftedChat,
-  Bubble,
   InputToolbar,
   Send,
   SystemMessage,
@@ -17,13 +16,13 @@ import messageData from '../partials2/message-data.json';
 import {AssetSvg, ButtonView, FadeIn, Text} from 'components';
 import {TouchableOpacity} from 'react-native';
 import moment from 'moment';
+import Bubble from './chat-item';
 
 const ChatMessages = props => {
-  const {longPressedMessageId, setLongPressedMessageId} = props;
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [text, setText] = useState('');
+  const [longPressedMessageId, setLongPressedMessageId] = useState('');
   const insets = useSafeAreaInsets();
-  console.log('longPressedMessageId', longPressedMessageId);
 
   const [replyMessage, setReplyMessage] = useState<IMessage | null>(null);
   const swipeableRowRef = useRef<Swipeable | null>(null);
@@ -102,7 +101,7 @@ const ChatMessages = props => {
     }
   }, [replyMessage]);
 
-  const onLongPress = (context, message) => {
+  const onLongPress = message => {
     setLongPressedMessageId(message._id);
   };
   return (
@@ -111,12 +110,11 @@ const ChatMessages = props => {
         flex: 1,
         marginBottom: insets.bottom,
       }}>
-      <GiftedChat
-        messages={messages}
+      <FlatList
+        data={messages}
         onSend={(messages: any) => onSend(messages)}
         onInputTextChanged={setText}
         user={{_id: 1}}
-        onLongPress={onLongPress}
         renderSystemMessage={props => (
           <SystemMessage
             {...props}
@@ -173,37 +171,15 @@ const ChatMessages = props => {
         renderAvatar={null}
         maxComposerHeight={100}
         textInputProps={styles.composer}
-        renderBubble={props => {
-          return (
-            <>
-              <Bubble
-                {...props}
-                textStyle={{right: {color: colors.gray8}}}
-                wrapperStyle={{
-                  left: {backgroundColor: '#fff'},
-                  right: {backgroundColor: colors.primary3},
-                }}
-              />
-              {/* Display the reaction if present */}
-              {props?.currentMessage?.reactions?.map?.((reaction, index) => (
-                <View
-                  key={index}
-                  style={{
-                    position: 'absolute',
-                    bottom: 10,
-                    right: 10,
-                    backgroundColor: colors.primary3,
-                    borderRadius: 10,
-                  }}>
-                  <Text text={reaction} />
-                </View>
-              ))}
-              {longPressedMessageId === props.currentMessage._id && (
-                <RenderEmojiPicker id={props.currentMessage._id} />
-              )}
-            </>
-          );
-        }}
+        renderItem={({item, index}) => (
+          <Bubble
+            item={item}
+            index={index}
+            key={item._id}
+            onLongPress={onLongPress}
+            longPressedMessageId={longPressedMessageId}
+          />
+        )}
         renderSend={props => (
           <View
             style={{
@@ -277,18 +253,3 @@ const styles = StyleSheet.create({
 });
 
 export default ChatMessages;
-
-const RenderEmojiPicker = ({id, show = false}) => {
-  console.log('show', show);
-
-  // if (!show) return null;
-  return (
-    <View style={styles.emojiContainer}>
-      {['😊', '😂', '😍', '😢', '😡'].map((emoji, index) => (
-        <TouchableOpacity key={index}>
-          <Text text={emoji} />
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-};

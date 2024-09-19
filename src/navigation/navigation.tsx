@@ -18,8 +18,7 @@ export const ApplicationNavigator = () => {
       <NavigationContainer theme={theme} ref={navigationRef}>
         <Stack.Navigator
           screenOptions={{headerShown: false}}
-          // initialRouteName={routes.CHAT}
-        >
+          initialRouteName={routes.CHAT}>
           {BottomTabNavigator}
           {CommonNavigator}
         </Stack.Navigator>

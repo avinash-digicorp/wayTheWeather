@@ -7,12 +7,14 @@ import {
   requestLocationPermission,
 } from 'utils/location';
 import {LocationTypes} from 'store/common-interface';
+import {hasLength} from 'utils';
 
 const initialState: IInitialCommonStateProps = {
   location: null,
   fetchingWeather: false,
   weather: null,
   unit: 'metric',
+  todo: [],
 };
 
 export const searchLocation = createAsyncThunk(
@@ -70,6 +72,29 @@ export const commonSlice = createSlice({
     setUnit: (state, action: PayloadAction<'metric' | 'imperial'>) => {
       state.unit = action.payload;
     },
+    addTodo: (state, action) => {
+      try {
+        if (hasLength(JSON.parse(action?.payload))) {
+          const newItems = JSON.parse(action?.payload)?.map(i => ({
+            ...i,
+            completed: false,
+            id: '' + Math.random() + new Date(),
+          }));
+          state.todo = [...newItems, ...state.todo];
+        }
+      } catch (e) {}
+    },
+    completeTodo(state, action) {
+      state.todo = state.todo.map(i => {
+        if (i.id === action.payload) {
+          i.completed = !i.completed;
+        }
+        return i;
+      });
+    },
+    deleteTodo(state, action) {
+      state.todo = state.todo.filter(i => i.id !== action.payload);
+    },
   },
   extraReducers: builder => {
     builder.addCase(fetchCurrentLocation.fulfilled, (state, action) => {
@@ -89,6 +114,6 @@ export const commonSlice = createSlice({
   },
 });
 
-export const {} = commonSlice.actions;
+export const {addTodo, completeTodo, deleteTodo} = commonSlice.actions;
 
 export default commonSlice.reducer;

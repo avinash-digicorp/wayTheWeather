@@ -41,7 +41,6 @@ import {SCREEN_WIDTH} from 'utils';
 import {StyleSheet} from 'react-native';
 import {fonts} from 'utils/fonts';
 import ChatMessages from './partials/chat-messages';
-import {AssetSvg, ButtonView, FadeIn} from 'components';
 const AnimPressable = Animated.createAnimatedComponent(Pressable);
 const DELAY_LONG_PRESS = isIosPlatform ? 250 : 150; //Default is 500ms
 
@@ -52,30 +51,23 @@ const captureOptions: CaptureOptions = {
 };
 
 export const Chat = () => {
-  const insets = useSafeAreaInsets();
   const [input, setInput] = useState('');
-  const keyboardH = useKeyboard(true);
   const keyb = useAnimatedKeyboard({
     isStatusBarTranslucentAndroid: true,
   });
 
-  const listRef = React.useRef<FlatList>(null);
   const inputRef = React.useRef<TextInput>(null);
 
-  const scrollY = useSharedValue(0);
   const longPress = useSharedValue(0);
   const lockedHeight = useSharedValue(0);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [captureUri, setCaptureUri] = useState<string | null>(null);
-  const [longPressedMessageId, setLongPressedMessageId] = useState(null);
+  const [longPressedMessageId, setLongPressedMessageId] = useState('');
   const [clonedItem, setClonedItem] = useState<{
     id: string;
     top: number | null;
   }>({id: '0', top: null});
-
-  const marginTop = insets.top > 0 ? insets.top : 24;
-  const paddingBottom = keyboardH > 0 ? keyboardH : 16;
 
   const opacity = useAnimatedStyle(
     () => ({
@@ -124,30 +116,6 @@ export const Chat = () => {
     }
   }, []);
 
-  const scrollToFirstItem = React.useCallback(() => {
-    try {
-      listRef.current?.scrollToEnd({animated: true});
-    } catch (e) {
-      console.log({e});
-    }
-  }, []);
-
-  const onScroll = React.useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      scrollY.value = e.nativeEvent.contentOffset.y;
-    },
-    [],
-  );
-
-  const capture = React.useCallback((id: string, top: number) => {
-    captureScreen(captureOptions).then(uri => {
-      isAndroidPlatform && triggerLongPressHaptik();
-      longPress.value = withTiming(1, {duration: isIosPlatform ? 200 : 1});
-      setClonedItem({id, top});
-      setCaptureUri(uri);
-    });
-  }, []);
-
   const onPressOut = React.useCallback(
     (id?: string, emoji?: ImageSourcePropType) => {
       longPress.value = withTiming(0, {duration: 100}, finished => {
@@ -168,14 +136,6 @@ export const Chat = () => {
     },
     [],
   );
-
-  const handleKeyboard = React.useCallback(() => {
-    if (keyb.height.value > 0) {
-      lockedHeight.value = keyb.height.value;
-      Keyboard.dismiss();
-    }
-  }, []);
-
   const onEmojiSelection = React.useCallback(
     (messageId: string, emojiSelection?: ImageSourcePropType) => {
       setMessages(oldMessages =>

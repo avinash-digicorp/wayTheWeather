@@ -72,7 +72,6 @@ export default ({navigation}) => {
       const directoryExists = await RNFS.exists(directory);
 
       if (!directoryExists) {
-        console.log('Directory does not exist.');
         return [];
       }
 
@@ -94,12 +93,10 @@ export default ({navigation}) => {
       const fileExists = await RNFS.exists(imagePath);
 
       if (!fileExists) {
-        console.log('File does not exist:', imagePath);
         return false;
       }
       await RNFS.unlink(imagePath);
       await getImages();
-      console.log('Deleted file:', imagePath);
       return true;
     } catch (error) {
       console.error('Failed to delete the image:', error);
@@ -109,8 +106,6 @@ export default ({navigation}) => {
   const requestStoragePermission = async () => {
     if (isIosPlatform) {
       const permission = await request(PERMISSIONS.IOS.MEDIA_LIBRARY);
-      console.log('permission', permission);
-
       return permission === 'granted';
     }
     try {
@@ -126,17 +121,15 @@ export default ({navigation}) => {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('Storage permission granted', granted);
       } else {
-        console.log('Storage permission denied', granted);
       }
     } catch (err) {
       console.warn(err);
     }
   };
   useEffect(() => {
-    requestStoragePermission();
-    getImages();
+    // requestStoragePermission();
+    // getImages();
     return () => {};
   }, []);
 
@@ -169,6 +162,10 @@ export default ({navigation}) => {
           </ViewShot>
           <Button onPress={download} title="Download" />
           <Button title="Share Screenshot" onPress={share} />
+          <Button
+            title="Add Todo"
+            onPress={() => navigation.navigate(routes.ADD_TODO)}
+          />
           <ScrollView horizontal className="pl-4">
             <View className="flex flex-row gap-3">
               {images.map((image, index) => (

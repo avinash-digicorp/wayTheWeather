@@ -15,6 +15,7 @@ import {Weather} from 'screens/weather';
 import Test from 'screens/test';
 import {Chat} from 'screens/chat';
 import {Todo} from 'screens/todo';
+import {AddTodo} from 'screens/add-todo';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
@@ -49,22 +50,12 @@ export const BottomTabs = () => (
         ),
       }}
     />
-
-    <TabStack.Screen
-      name={routes.MAIN_SETTINGS}
-      component={Todo}
-      options={{
-        tabBarIcon: props => (
-          <TabButton {...props} routeName={routes.MAIN_SETTINGS} />
-        ),
-      }}
-    />
     <TabStack.Screen
       name={routes.MAIN_TEST}
       component={Test}
       options={{
         tabBarIcon: props => (
-          <TabButton {...props} routeName={routes.MAIN_TEST} />
+          <TabButton {...props} routeName={routes.MAIN_SETTINGS} />
         ),
       }}
     />
@@ -95,6 +86,24 @@ export const BottomTabNavigator = (
         animationTypeForReplace: 'push',
       }}
       component={Chat}
+    />
+    <Stack.Screen
+      name={routes.ADD_TODO}
+      options={{
+        animation: 'fade',
+        animationDuration: 300,
+        animationTypeForReplace: 'push',
+      }}
+      component={AddTodo}
+    />
+    <Stack.Screen
+      name={routes.TODO}
+      options={{
+        animation: 'fade',
+        animationDuration: 300,
+        animationTypeForReplace: 'push',
+      }}
+      component={Todo}
     />
   </Stack.Group>
 );

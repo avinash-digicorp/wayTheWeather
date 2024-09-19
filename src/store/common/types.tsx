@@ -5,4 +5,5 @@ export interface IInitialCommonStateProps {
   weather: null | WeatherProp;
   unit: 'metric' | 'imperial';
   fetchingWeather: boolean;
+  todo: any[];
 }

@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       colors: {
         primary: '#189AB4',
-        'primary-200': '#05445E'
-        // 'primary-300': colors.primary3,
+        'primary-200': '#05445E',
+        'primary-300': '#D4F1F4',
         // 'primary-400': colors.primary4,
         // 'primary-500': colors.primary5,
         // 'primary-600': colors.primary6,
@@ -21,9 +21,9 @@ module.exports = {
         light: ['Poppins-Light'],
         medium: ['Poppins-Medium'],
         regular: ['Poppins-Regular'],
-        'semi-bold': ['Poppins-SemiBold']
-      }
-    }
+        'semi-bold': ['Poppins-SemiBold'],
+      },
+    },
   },
-  plugins: []
-}
+  plugins: [],
+};

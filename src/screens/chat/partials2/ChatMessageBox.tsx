@@ -1,21 +1,55 @@
-import {AssetSvg} from 'components';
-import React from 'react';
+import {AssetSvg, Text} from 'components';
+import React, {useState} from 'react';
 import {View, StyleSheet, Animated} from 'react-native';
 import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 import {IMessage, Message, MessageProps} from 'react-native-gifted-chat';
 import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
 import colors from 'theme';
+import {Reaction} from 'react-native-reactions';
 
 type ChatMessageBoxProps = {
   setReplyOnSwipeOpen: (message: IMessage) => void;
   updateRowRef: (ref: any) => void;
 } & MessageProps<IMessage>;
 
+const ReactionItems = [
+  {
+    id: 0,
+    emoji: '😇',
+    title: 'like',
+  },
+  {
+    id: 1,
+    emoji: '🥰',
+    title: 'love',
+  },
+  {
+    id: 2,
+    emoji: '🤗',
+    title: 'care',
+  },
+  {
+    id: 3,
+    emoji: '😘',
+    title: 'kiss',
+  },
+  {
+    id: 4,
+    emoji: '😂',
+    title: 'laugh',
+  },
+  {
+    id: 5,
+    emoji: '😎',
+    title: 'cool',
+  },
+];
 const ChatMessageBox = ({
   setReplyOnSwipeOpen,
   updateRowRef,
   ...props
 }: ChatMessageBoxProps) => {
+  const [selectedEmoji, setSelectedEmoji] = useState({});
   const isNextMyMessage =
     props.currentMessage &&
     props.nextMessage &&

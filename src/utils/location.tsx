@@ -111,7 +111,6 @@ export const getAddressForCoordinate = async (lat, lng) => {
     if (isEmpty(address?.results)) return {};
     return address?.results?.[0];
   } catch (e) {
-    console.log(e);
     return {};
   }
 };
@@ -183,7 +182,6 @@ export const getDirections = async (startLoc, destinationLoc) => {
     });
     return coords;
   } catch (e) {
-    console.log(e);
     return [];
   }
 };
@@ -204,7 +202,6 @@ export const getDurationOfDirection = async (
     let respJson = await resp.json();
     return respJson?.rows[0]?.elements[0]?.duration?.text;
   } catch (e) {
-    console.log(e);
     return;
   }
 };
