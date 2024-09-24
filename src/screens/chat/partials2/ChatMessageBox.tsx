@@ -2,15 +2,6 @@ import {AssetSvg, Text} from 'components';
 import React, {useState} from 'react';
 import {View, StyleSheet, Animated} from 'react-native';
 import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
-import {IMessage, Message, MessageProps} from 'react-native-gifted-chat';
-import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
-import colors from 'theme';
-import {Reaction} from 'react-native-reactions';
-
-type ChatMessageBoxProps = {
-  setReplyOnSwipeOpen: (message: IMessage) => void;
-  updateRowRef: (ref: any) => void;
-} & MessageProps<IMessage>;
 
 const ReactionItems = [
   {
@@ -44,17 +35,13 @@ const ReactionItems = [
     title: 'cool',
   },
 ];
-const ChatMessageBox = ({
-  setReplyOnSwipeOpen,
-  updateRowRef,
-  ...props
-}: ChatMessageBoxProps) => {
+const ChatMessageBox = ({setReplyOnSwipeOpen, updateRowRef, ...props}) => {
   const [selectedEmoji, setSelectedEmoji] = useState({});
   const isNextMyMessage =
-    props.currentMessage &&
-    props.nextMessage &&
-    isSameUser(props.currentMessage, props.nextMessage) &&
-    isSameDay(props.currentMessage, props.nextMessage);
+    props?.currentMessage &&
+    props?.nextMessage &&
+    props?.isSameUser &&
+    props?.isSameDay;
 
   const renderRightAction = (
     progressAnimatedValue: Animated.AnimatedInterpolation<any>,
@@ -98,9 +85,7 @@ const ChatMessageBox = ({
         friction={2}
         rightThreshold={40}
         renderLeftActions={renderRightAction}
-        onSwipeableWillOpen={onSwipeOpenAction}>
-        <Message {...props} />
-      </Swipeable>
+        onSwipeableWillOpen={onSwipeOpenAction}></Swipeable>
     </GestureHandlerRootView>
   );
 };

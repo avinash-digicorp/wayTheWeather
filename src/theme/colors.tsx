@@ -4,7 +4,7 @@ export default {
   primary2: '#05445E',
   primary3: '#D4F1F4',
   primary4: '#3cc9e6',
-  primary5: '#10B981',
+  primary5: '#D4F1F499',
   primary6: '#6EE7B7',
   primary7: '#047857',
   primary8: '#34D399',

@@ -1,14 +1,12 @@
-import {View} from 'react-native';
 import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {ButtonView, Text} from 'components';
-import colors, {cn} from 'theme';
-import clsx from 'clsx';
 import Animated, {
-  FadeIn,
-  FadeOut,
+  CurvedTransition,
+  Easing,
   StretchInX,
-  StretchOutX,
 } from 'react-native-reanimated';
+import colors from 'theme';
 
 interface IChatItemProps {
   item: {
@@ -23,52 +21,123 @@ interface IChatItemProps {
   longPressedMessageId?: string;
 }
 export default (props: IChatItemProps) => {
-  const {item, index, onLongPress, longPressedMessageId} = props;
+  const {item, setLongPressedMessageId, onLongPress, longPressedMessageId} =
+    props;
   const showEmojiPicker = longPressedMessageId === item._id;
   const messageReactions = item?.reactions;
+  const isUser = item?.user?._id === 0;
+
   return (
-    <View>
+    <View
+      style={[
+        styles.mainContainer,
+        isUser && {alignItems: 'flex-end'},
+        showEmojiPicker && styles.mainContainerSelected,
+      ]}>
       <ButtonView
         onLongPress={() => onLongPress(item)}
-        onPress={() => onLongPress(item)}
+        style={styles.messageContainer}
         className={
-          'px-4 py-2 mb-8 rounded-2xl mx-2 flex-row items-center justify-center bg-primary-300'
+          'px-3 py-2 rounded-2xl mx-2 flex-row items-center justify-center bg-primary-300'
         }>
         <Text>{item.text}</Text>
       </ButtonView>
-      <Reactions show={!showEmojiPicker} reactions={messageReactions} />
 
-      <RenderEmojiPicker show={showEmojiPicker} />
+      <Reactions
+        isUser={isUser}
+        onPress={() => setLongPressedMessageId(showEmojiPicker ? '' : item._id)}
+        reactions={messageReactions}
+      />
+      <ReactionPicker
+        isUser={isUser}
+        onPress={() => setLongPressedMessageId(showEmojiPicker ? '' : item._id)}
+        show={showEmojiPicker}
+        reactions={messageReactions}
+      />
     </View>
   );
 };
-
-const Reactions = ({reactions, show}) => {
-  if (!show) return null;
+const Reactions = ({reactions, isUser, onPress}) => {
   return (
-    <Animated.View entering={FadeIn} exiting={FadeOut}>
-      <View className="flex-row bg-white items-center justify-between px-1 py-1 rounded-full absolute bottom-4 right-4">
-        {reactions?.map?.((reaction, index) => (
-          <ButtonView key={index}>
-            <Text text={reaction} />
-          </ButtonView>
-        ))}
-      </View>
+    <Animated.View
+      layout={CurvedTransition.easingX(Easing.sin).easingY(Easing.exp)}
+      style={[
+        styles.emojiContainer,
+        styles.reactionContainer,
+        isUser ? {right: 20} : {left: 20},
+      ]}>
+      {reactions?.map?.((reaction, index) => (
+        <ButtonView onPress={onPress} key={index}>
+          <Text className="text-xs" text={reaction} />
+        </ButtonView>
+      ))}
+    </Animated.View>
+  );
+};
+interface ReactionPickerProps {
+  show: boolean;
+  reactions: {userId: number; emoji: string}[];
+  isUser: boolean;
+  addReaction: (emoji: string) => void;
+}
+
+const REACTIONS = ['😊', '😂', '😍', '😢', '😡'];
+const ReactionPicker = ({addReaction, show}: ReactionPickerProps) => {
+  if (!show) {
+    return null;
+  }
+  return (
+    <Animated.View
+      entering={StretchInX}
+      layout={CurvedTransition.easingX(Easing.sin).easingY(Easing.exp)}
+      style={[styles.emojiContainer, styles.pickerContainer]}>
+      {REACTIONS.map((emoji, index) => (
+        <ButtonView onPress={() => addReaction(emoji)} key={index}>
+          <Text className="text-xl" text={emoji} />
+        </ButtonView>
+      ))}
     </Animated.View>
   );
 };
 
-const RenderEmojiPicker = ({show = false}) => {
-  if (!show) return null;
-  return (
-    <Animated.View entering={StretchInX} exiting={FadeOut}>
-      <View className="w-10/12 self-center flex-row bg-white shadow-lg items-center justify-between px-4 py-3 rounded-3xl absolute -bottom-2">
-        {['😊', '😂', '😍', '😢', '😡'].map((emoji, index) => (
-          <ButtonView key={index}>
-            <Text text={emoji} />
-          </ButtonView>
-        ))}
-      </View>
-    </Animated.View>
-  );
-};
+const styles = StyleSheet.create({
+  mainContainerSelected: {
+    justifyContent: 'flex-end',
+    backgroundColor: colors.primary5,
+  },
+  mainContainer: {
+    width: '100%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    paddingBottom: 27,
+  },
+  messageContainer: {width: '82%'},
+  emojiContainer: {
+    alignSelf: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.2,
+    elevation: 5,
+    borderRadius: 200,
+    position: 'absolute',
+  },
+  reactionContainer: {
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    bottom: 0,
+  },
+  pickerContainer: {
+    paddingHorizontal: 25,
+    paddingVertical: 12,
+    top: -50,
+    flex: 1,
+    width: '70%',
+    alignSelf: 'center',
+  },
+});

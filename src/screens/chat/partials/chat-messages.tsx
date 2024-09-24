@@ -4,27 +4,20 @@ import colors from 'theme';
 import React, {useState, useCallback, useEffect, useRef} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
-import {
-  GiftedChat,
-  InputToolbar,
-  Send,
-  SystemMessage,
-  IMessage,
-} from 'react-native-gifted-chat';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import messageData from '../partials2/message-data.json';
 import {AssetSvg, ButtonView, FadeIn, Text} from 'components';
-import {TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import Bubble from './chat-item';
+import {BlurView} from '@react-native-community/blur';
 
 const ChatMessages = props => {
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [messages, setMessages] = useState([]);
   const [text, setText] = useState('');
   const [longPressedMessageId, setLongPressedMessageId] = useState('');
   const insets = useSafeAreaInsets();
 
-  const [replyMessage, setReplyMessage] = useState<IMessage | null>(null);
+  const [replyMessage, setReplyMessage] = useState(null);
   const swipeableRowRef = useRef<Swipeable | null>(null);
 
   useEffect(() => {
@@ -55,31 +48,7 @@ const ChatMessages = props => {
     ]);
   }, []);
 
-  const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages: any[]) =>
-      GiftedChat.append(previousMessages, messages),
-    );
-  }, []);
-
-  const renderInputToolbar = (props: any) => {
-    return (
-      <InputToolbar
-        {...props}
-        containerStyle={{backgroundColor: colors.background}}
-        renderActions={() => (
-          <View
-            style={{
-              height: 44,
-              justifyContent: 'center',
-              alignItems: 'center',
-              left: 5,
-            }}>
-            <AssetSvg name="location" />
-          </View>
-        )}
-      />
-    );
-  };
+  const onSend = useCallback((messages = []) => {}, []);
 
   const updateRowRef = useCallback(
     (ref: any) => {
@@ -115,23 +84,6 @@ const ChatMessages = props => {
         onSend={(messages: any) => onSend(messages)}
         onInputTextChanged={setText}
         user={{_id: 1}}
-        renderSystemMessage={props => (
-          <SystemMessage
-            {...props}
-            wrapperStyle={{
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              backgroundColor: colors.white,
-              shadowColor: '#000',
-              shadowOffset: {width: 0, height: 1},
-              shadowOpacity: 0.22,
-              shadowRadius: 2.22,
-              elevation: 3,
-              borderRadius: 15,
-            }}
-            textStyle={{color: colors.gray7}}
-          />
-        )}
         renderDay={props => {
           const isToday = moment(props?.currentMessage?.createdAt).isSame(
             new Date(),
@@ -177,6 +129,7 @@ const ChatMessages = props => {
             index={index}
             key={item._id}
             onLongPress={onLongPress}
+            setLongPressedMessageId={setLongPressedMessageId}
             longPressedMessageId={longPressedMessageId}
           />
         )}
@@ -196,15 +149,6 @@ const ChatMessages = props => {
                 <Ionicons name="mic-outline" color={colors.primary} size={28} /> */}
               </>
             )}
-            {text !== '' && (
-              <Send
-                {...props}
-                containerStyle={{
-                  justifyContent: 'center',
-                }}>
-                <AssetSvg name="right_arrow" />
-              </Send>
-            )}
           </View>
         )}
         scrollToBottomComponent={() => (
@@ -214,7 +158,6 @@ const ChatMessages = props => {
             </ButtonView>
           </FadeIn>
         )}
-        renderInputToolbar={renderInputToolbar}
         renderChatFooter={() => (
           <>
             <ReplyMessageBar

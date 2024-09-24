@@ -1,13 +1,12 @@
 import React from 'react';
 import {AssetSvg} from 'components';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {IMessage} from 'react-native-gifted-chat';
 import Animated, {FadeInDown, FadeOutDown} from 'react-native-reanimated';
 import colors from 'theme';
 
 type ReplyMessageBarProps = {
   clearReply: () => void;
-  message: IMessage | null;
+  message: any;
 };
 
 const ReplyMessageBar = ({clearReply, message}: ReplyMessageBarProps) => {
