@@ -1,77 +1,77 @@
 import React from 'react';
-import {TextInput, Pressable, StyleSheet} from 'react-native';
-import {SearchMessageInput} from './types';
-import {AssetSvg} from 'components';
-import {fonts} from 'utils/fonts';
-import {View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Animated, {CurvedTransition} from 'react-native-reanimated';
+import {ReachAnimation} from '@/components';
+import {keyboardReturnKeyType} from '@/utils/keyboard';
 import colors from 'theme';
+import {hasTextLength} from 'utils';
 
-export default React.memo(
-  ({input, setInput, inputRef, onPressSend}: SearchMessageInput) => {
-    return (
-      <Pressable
-        style={styles.container}
-        onPress={() => inputRef?.current?.focus()}>
-        <View style={[styles.shadowContainer, styles.inputContainer]}>
-          <TextInput
-            ref={inputRef}
-            multiline
-            value={input}
-            onChangeText={setInput}
-            numberOfLines={2}
-            placeholder="Message"
-            placeholderTextColor={'#bbbbbb'}
-            clearButtonMode="while-editing"
-            style={styles.input}
-          />
-        </View>
-        <Pressable
-          style={[styles.shadowContainer, styles.buttonContainer]}
-          onPress={() => onPressSend(input)}>
-          <AssetSvg height={16} width={16} name="right_arrow" />
-        </Pressable>
-      </Pressable>
-    );
-  },
-);
+export default props => {
+  return (
+    <View className="w-11/12 justify-between self-center flex-row ">
+      <Animated.View
+        layout={CurvedTransition}
+        style={[
+          styles.inputContainer,
+          styles.shadow,
+          hasTextLength(props?.messageValue) && styles.inputContainerTexted,
+        ]}>
+        <TextInput
+          meta={{}}
+          hideIcon
+          placeholder={'Type a message...'}
+          placeholderTextColor={colors.gray7}
+          input-className="text-gray-600 size-sm"
+          className="px-15"
+          container-className="mb-0"
+          activeEffect={false}
+          returnKeyType={keyboardReturnKeyType.SEARCH}
+          value={props?.messageValue}
+          onChangeText={props?.setMessageValue}
+        />
+      </Animated.View>
+      {hasTextLength(props?.messageValue) && (
+        <ReachAnimation>
+          <TouchableOpacity
+            style={[styles.shadow, styles.button]}></TouchableOpacity>
+        </ReachAnimation>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  shadowContainer: {
-    height: 50,
+  shadow: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    alignItems: 'center',
-    justifyContent: 'center',
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    borderRadius: 50,
-  },
-  container: {
-    position: 'absolute',
-    bottom: 30,
-    width: '95%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignSelf: 'center',
-  },
-
-  input: {
-    fontSize: 16,
-    width: '100%',
-    paddingBottom: 5,
-    includeFontPadding: !false,
-    fontFamily: fonts.semiBold,
-    color: 'black',
   },
   inputContainer: {
-    backgroundColor: '#fff',
-    width: '85%',
-    paddingHorizontal: 20,
+    flex: 1,
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: colors.gray1,
+    borderRadius: 100,
+    paddingVertical: 15,
+    paddingHorizontal: 12,
   },
-  buttonContainer: {backgroundColor: colors.primary9, width: 50},
+  inputContainerTexted: {marginRight: 20},
+  button: {
+    width: 50,
+    height: 50,
+    backgroundColor: colors.primary,
+    borderRadius: 100,
+  },
 });
