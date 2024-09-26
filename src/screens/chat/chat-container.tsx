@@ -21,7 +21,7 @@ export const useChat = () => {
     if (!hasTextLength(messageValue)) return;
     const newMessage: Message = {
       id: uniqueId(),
-      text: messageValue,
+      text: messageValue?.trim?.(),
       createdAt: moment().toLocaleString(),
       reactions: [],
       user: {id: 0},
@@ -32,6 +32,7 @@ export const useChat = () => {
     getRandomMessage();
   };
   const getRandomMessage = () => {
+    // TODO : typing indicator
     const randomText = ['Wow!', 'That is nice', 'Cool!'];
     const newMessage: Message = {
       id: uniqueId(),
