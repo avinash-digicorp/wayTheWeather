@@ -1,32 +1,45 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ButtonView, Text} from 'components';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {AssetSvg, ButtonView, Text} from 'components';
 import Animated, {
   CurvedTransition,
   Easing,
+  FadingTransition,
+  JumpingTransition,
+  LinearTransition,
+  SequencedTransition,
+  SharedTransition,
   StretchInX,
 } from 'react-native-reanimated';
 import colors from 'theme';
+import {Message} from './types';
+import {hasLength} from 'utils';
+import MessageText from './message-text';
 
 interface IChatItemProps {
-  item: {
-    id: string;
-    from: number;
-    date: string;
-    text: string;
-    reactions: {userId: number; emoji: string}[];
-  };
+  item: Message;
   index: number;
-  onLongPress?: () => void;
-  longPressedMessageId?: string;
+  setSelectedMessage?: (message: Message) => void;
+  selectedMessage: Message | null;
 }
+const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
 export default (props: IChatItemProps) => {
-  const {item, setLongPressedMessageId, onLongPress, longPressedMessageId} =
-    props;
-  const showEmojiPicker = longPressedMessageId === item._id;
+  const {item, selectedMessage, reactionChanges, setSelectedMessage} = props;
+  if (item.type === 'date') {
+    return (
+      <View style={styles.dateContainer}>
+        <Text style={styles.dateText}>{item.date}</Text>
+      </View>
+    );
+  }
+  const showEmojiPicker = selectedMessage?.id === item.id;
   const messageReactions = item?.reactions;
-  const isUser = item?.user?._id === 0;
-
+  const isUser = item?.user?.id === 0;
+  const setMessageItem = () => setSelectedMessage(item);
+  const onSelectReaction = (reaction: string) => {
+    reactionChanges(reaction, item.id);
+    setSelectedMessage(null);
+  };
   return (
     <View
       style={[
@@ -34,23 +47,37 @@ export default (props: IChatItemProps) => {
         isUser && {alignItems: 'flex-end'},
         showEmojiPicker && styles.mainContainerSelected,
       ]}>
-      <ButtonView
-        onLongPress={() => onLongPress(item)}
-        style={styles.messageContainer}
-        className={
-          'px-3 py-2 rounded-2xl mx-2 flex-row items-center justify-center bg-primary-300'
-        }>
-        <Text>{item.text}</Text>
-      </ButtonView>
-
+      <View
+        style={[isUser && {flexDirection: 'row-reverse'}]}
+        className="flex-row w-full">
+        <AnimatedButton
+          layout={CurvedTransition}
+          activeOpacity={0.9}
+          style={{maxWidth: '82%'}}
+          onLongPress={setMessageItem}
+          onPress={() => showEmojiPicker && setSelectedMessage(null)}
+          className={'px-3 py-2 rounded-2xl mx-2 flex-row bg-primary-300'}>
+          <MessageText text={item?.text} />
+        </AnimatedButton>
+        <View
+          style={[{width: '18%'}, isUser && {alignItems: 'flex-end'}]}
+          className="justify-center">
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={setMessageItem}
+            className={'items-center justify-center w-8 h-8'}>
+            <AssetSvg width={30} height={30} name="emoji" />
+          </TouchableOpacity>
+        </View>
+      </View>
       <Reactions
         isUser={isUser}
-        onPress={() => setLongPressedMessageId(showEmojiPicker ? '' : item._id)}
+        onPress={() => setSelectedMessage(showEmojiPicker ? null : item)}
         reactions={messageReactions}
       />
       <ReactionPicker
         isUser={isUser}
-        onPress={() => setLongPressedMessageId(showEmojiPicker ? '' : item._id)}
+        onSelectReaction={onSelectReaction}
         show={showEmojiPicker}
         reactions={messageReactions}
       />
@@ -58,6 +85,8 @@ export default (props: IChatItemProps) => {
   );
 };
 const Reactions = ({reactions, isUser, onPress}) => {
+  const reactionList = groupReactions(reactions);
+  if (!hasLength(reactionList)) return;
   return (
     <Animated.View
       layout={CurvedTransition.easingX(Easing.sin).easingY(Easing.exp)}
@@ -66,11 +95,17 @@ const Reactions = ({reactions, isUser, onPress}) => {
         styles.reactionContainer,
         isUser ? {right: 20} : {left: 20},
       ]}>
-      {reactions?.map?.((reaction, index) => (
-        <ButtonView onPress={onPress} key={index}>
-          <Text className="text-xs" text={reaction} />
-        </ButtonView>
-      ))}
+      {reactionList?.map?.((reaction, index) => {
+        const text =
+          reaction?.count > 1
+            ? `${reaction?.emoji} ${reaction?.count}`
+            : reaction?.emoji;
+        return (
+          <ButtonView onPress={onPress} key={index}>
+            <Text className="text-xs" text={text} />
+          </ButtonView>
+        );
+      })}
     </Animated.View>
   );
 };
@@ -82,7 +117,7 @@ interface ReactionPickerProps {
 }
 
 const REACTIONS = ['😊', '😂', '😍', '😢', '😡'];
-const ReactionPicker = ({addReaction, show}: ReactionPickerProps) => {
+const ReactionPicker = ({onSelectReaction, show}: ReactionPickerProps) => {
   if (!show) {
     return null;
   }
@@ -92,7 +127,7 @@ const ReactionPicker = ({addReaction, show}: ReactionPickerProps) => {
       layout={CurvedTransition.easingX(Easing.sin).easingY(Easing.exp)}
       style={[styles.emojiContainer, styles.pickerContainer]}>
       {REACTIONS.map((emoji, index) => (
-        <ButtonView onPress={() => addReaction(emoji)} key={index}>
+        <ButtonView onPress={() => onSelectReaction(emoji)} key={index}>
           <Text className="text-xl" text={emoji} />
         </ButtonView>
       ))}
@@ -100,9 +135,20 @@ const ReactionPicker = ({addReaction, show}: ReactionPickerProps) => {
   );
 };
 
+const groupReactions = (reactions = []) => {
+  return reactions.reduce((acc, {emoji}) => {
+    const existingReaction = acc.find(item => item.emoji === emoji);
+    if (existingReaction) {
+      existingReaction.count += 1;
+    } else {
+      acc.push({emoji, count: 1});
+    }
+    return acc;
+  }, []);
+};
+
 const styles = StyleSheet.create({
   mainContainerSelected: {
-    justifyContent: 'flex-end',
     backgroundColor: colors.primary5,
   },
   mainContainer: {
@@ -111,8 +157,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingBottom: 27,
   },
-  messageContainer: {width: '82%'},
+  messageContainer: {maxWidth: '82%'},
   emojiContainer: {
+    zIndex: 999,
     alignSelf: 'center',
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -139,5 +186,18 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '70%',
     alignSelf: 'center',
+  },
+  dateContainer: {
+    zIndex: -1,
+    backgroundColor: '#dcdcdc',
+    padding: 5,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderRadius: 6,
+    marginVertical: 10,
+  },
+  dateText: {
+    fontSize: 12,
   },
 });

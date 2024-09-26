@@ -2,15 +2,17 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {ImageSourcePropType, TextInput} from 'react-native';
 import {AnimatedStyle, SharedValue} from 'react-native-reanimated';
 
+export type EmojiType = {
+  userId: number;
+  emoji: string;
+};
 export type Message = {
   id: string;
-  image: ImageSourcePropType;
-  name: string;
-  message: string;
-  time: string;
-  animate?: boolean;
-  isOwnerOfChat?: boolean | undefined;
-  emoji?: ImageSourcePropType;
+  text: string;
+  reactions: EmojiType[];
+  type?: 'date' | 'message';
+  createdAt?: string;
+  user: {id: number};
 };
 
 export type MessageItemProps = {

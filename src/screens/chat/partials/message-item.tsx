@@ -108,7 +108,7 @@ export default ({
 
   const onLongPress = React.useCallback(
     (e: GestureResponderEvent) => {
-      isIosPlatform && triggerLongPressHaptik();
+      triggerLongPressHaptik();
 
       !!handleKeyboard && handleKeyboard();
 

@@ -1,97 +1,60 @@
-import colors from 'theme';
-import React, {useState, useCallback, useEffect, useRef} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {Swipeable} from 'react-native-gesture-handler';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import React, {useEffect, useState} from 'react';
+import {FlatList} from 'react-native';
 import messageData from '../partials/message-data.json';
-import {Text} from 'components';
-import moment from 'moment';
 import Bubble from './chat-item';
-import ChatInput from './chat-input';
+import {Message} from './types';
+import moment from 'moment';
 
 const ChatMessages = props => {
-  const [messages, setMessages] = useState([]);
-  const [text, setText] = useState('');
-  const [longPressedMessageId, setLongPressedMessageId] = useState('');
-  const insets = useSafeAreaInsets();
-
-  const [replyMessage, setReplyMessage] = useState(null);
-  const swipeableRowRef = useRef<Swipeable | null>(null);
-
-  useEffect(() => {
-    setMessages([
-      ...messageData.map(message => {
-        return {
-          _id: message.id,
-          text: message.msg,
-          reactions: ['👍', '👎'],
-          createdAt: new Date(message.date),
-          user: {
-            _id: message.from,
-            name: message.from ? 'You' : 'Bob',
-          },
-        };
-      }),
-      {
-        _id: 0,
-        system: true,
-        text: 'All your base are belong to us',
-        reactions: ['😊'],
-        createdAt: new Date(),
-        user: {
-          _id: 0,
-          name: 'Bot',
-        },
-      },
-    ]);
-  }, []);
-
-  const onSend = useCallback((messages = []) => {}, []);
+  const {
+    messages,
+    setMessages,
+    selectedMessage,
+    reactionChanges,
+    setSelectedMessage,
+  } = props;
+  const [messageList, setMessageList] = useState<Message[]>([]);
 
   useEffect(() => {
-    if (replyMessage && swipeableRowRef.current) {
-      swipeableRowRef.current.close();
-      swipeableRowRef.current = null;
-    }
-  }, [replyMessage]);
-
-  const onLongPress = message => {
-    setLongPressedMessageId(message._id);
-  };
+    const groupedMessages = groupMessagesByDate(messages);
+    setMessageList(groupedMessages);
+  }, [messages]);
   return (
     <FlatList
-      data={messages}
+      data={messageList}
       inverted
-      style={{borderWidth: 1, flex: 1}}
-      keyExtractor={item => item._id}
-      renderItem={({item, index}) => (
-        <Bubble
-          item={item}
-          index={index}
-          key={item._id}
-          onLongPress={onLongPress}
-          setLongPressedMessageId={setLongPressedMessageId}
-          longPressedMessageId={longPressedMessageId}
-        />
-      )}
+      keyExtractor={(item: Message) => item?.id}
+      renderItem={({item, index}) => {
+        return (
+          <Bubble
+            item={item}
+            index={index}
+            key={item?.id}
+            reactionChanges={reactionChanges}
+            setSelectedMessage={setSelectedMessage}
+            selectedMessage={selectedMessage}
+          />
+        );
+      }}
+      contentContainerStyle={{flexDirection: 'column-reverse'}}
     />
   );
 };
 
-const styles = StyleSheet.create({
-  emojiContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 10,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 5,
-    elevation: 5,
-    position: 'absolute',
-  },
-  composer: {
-    backgroundColor: 'transparent',
-  },
-});
+const groupMessagesByDate = (messages: Message[]) => {
+  const groupedMessages = [];
+  let lastDate = null;
+
+  messages.forEach(message => {
+    const messageDate = moment(message.createdAt).format('MMMM D, YYYY');
+    if (messageDate !== lastDate) {
+      groupedMessages.push({type: 'date', date: messageDate});
+      lastDate = messageDate;
+    }
+    groupedMessages.push({...message, type: 'message'});
+  });
+
+  return groupedMessages;
+};
 
 export default ChatMessages;

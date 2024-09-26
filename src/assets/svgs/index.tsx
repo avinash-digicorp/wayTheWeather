@@ -3,3 +3,7 @@ export * from './right-arrow';
 export * from './left-arrow';
 export * from './location-icon';
 export * from './cross-icon';
+export * from './copy-icon';
+export * from './emoji-icon';
+export * from './sent-icon';
+export * from './phone-icon';

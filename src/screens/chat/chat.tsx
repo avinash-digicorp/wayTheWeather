@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   KeyboardAvoidingView,
+  Pressable,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ASSET_IMAGES} from 'assets/images';
@@ -15,15 +16,18 @@ import _ from 'lodash';
 
 export const Chat = () => {
   const props = useChat();
+  const {setSelectedMessage} = props;
   return (
     <View className="items-center justify-between" style={styles.container}>
-      <ImageBackground
-        source={ASSET_IMAGES.chatBg}
-        resizeMode="repeat"
-        style={styles.bg}
-      />
-      <ChatHeader />
-      <KeyboardAvoidingView behavior={'height'} style={styles.container2}>
+      <Pressable onPress={() => setSelectedMessage(null)} style={styles.bg}>
+        <ImageBackground
+          source={ASSET_IMAGES.chatBg}
+          resizeMode="repeat"
+          style={{width: '100%', height: '100%'}}
+        />
+      </Pressable>
+      <ChatHeader {...props} />
+      <KeyboardAvoidingView style={styles.container2}>
         <ChatMessages {...props} />
         <ChatInput {...props} />
       </KeyboardAvoidingView>
@@ -45,5 +49,6 @@ const styles = StyleSheet.create({
   container2: {
     paddingBottom: 30,
     flex: 1,
+    width: '100%',
   },
 });

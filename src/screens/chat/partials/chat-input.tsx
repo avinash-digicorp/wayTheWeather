@@ -1,28 +1,22 @@
 import React from 'react';
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import Animated, {CurvedTransition} from 'react-native-reanimated';
-import {ReachAnimation} from '@/components';
+import {AssetSvg, ReachAnimation} from '@/components';
 import {keyboardReturnKeyType} from '@/utils/keyboard';
 import colors from 'theme';
-import {hasTextLength} from 'utils';
 
 export default props => {
   return (
-    <View className="w-11/12 justify-between self-center flex-row ">
+    <View className="w-11/12 justify-between items-end self-center flex-row ">
       <Animated.View
         layout={CurvedTransition}
         style={[
           styles.inputContainer,
           styles.shadow,
-          hasTextLength(props?.messageValue) && styles.inputContainerTexted,
+          styles.inputContainerTexted,
         ]}>
         <TextInput
+          multiline
           meta={{}}
           hideIcon
           placeholder={'Type a message...'}
@@ -36,17 +30,21 @@ export default props => {
           onChangeText={props?.setMessageValue}
         />
       </Animated.View>
-      {hasTextLength(props?.messageValue) && (
-        <ReachAnimation>
-          <TouchableOpacity
-            style={[styles.shadow, styles.button]}></TouchableOpacity>
-        </ReachAnimation>
-      )}
+      {/* {hasTextLength(props?.messageValue) && ( */}
+      <ReachAnimation>
+        <TouchableOpacity
+          onPress={props?.addMessage}
+          style={[styles.shadow, styles.button]}>
+          <AssetSvg name="sent" width={24} height={24} style={styles.sent} />
+        </TouchableOpacity>
+      </ReachAnimation>
+      {/* )} */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  sent: {marginLeft: 3},
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
@@ -60,17 +58,22 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     alignSelf: 'center',
+    justifyContent: 'center',
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: colors.gray1,
-    borderRadius: 100,
-    paddingVertical: 15,
-    paddingHorizontal: 12,
+    borderRadius: 30,
+    minHeight: 50,
+    paddingBottom: 2,
+    maxHeight: 200,
+    paddingHorizontal: 15,
   },
   inputContainerTexted: {marginRight: 20},
   button: {
     width: 50,
     height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.primary,
     borderRadius: 100,
   },
