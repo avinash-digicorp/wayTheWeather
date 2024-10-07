@@ -16,6 +16,7 @@ import Test from 'screens/test';
 import {Chat} from 'screens/chat';
 import {Todo} from 'screens/todo';
 import {AddTodo} from 'screens/add-todo';
+import ChatList from 'screens/chat-list';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
@@ -78,15 +79,8 @@ export const BottomTabNavigator = (
       options={{animation: 'flip', gestureEnabled: true}}
       component={WeatherTracking}
     />
-    <Stack.Screen
-      name={routes.CHAT}
-      options={{
-        animation: 'fade',
-        animationDuration: 300,
-        animationTypeForReplace: 'push',
-      }}
-      component={Chat}
-    />
+    <Stack.Screen name={routes.CHAT} component={Chat} />
+    <Stack.Screen name={routes.CHAT_LIST} component={ChatList} />
     <Stack.Screen
       name={routes.ADD_TODO}
       options={{

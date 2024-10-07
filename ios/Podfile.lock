@@ -2442,7 +2442,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-blur (4.4.0):
+  - react-native-blur (4.4.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2463,7 +2463,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-geolocation (3.3.0):
+  - react-native-geolocation (3.4.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2490,13 +2490,13 @@ PODS:
     - React-Core
   - react-native-maps (1.18.0):
     - React-Core
-  - react-native-netinfo (11.3.2):
+  - react-native-netinfo (11.4.1):
     - React-Core
   - react-native-network-info (5.2.1):
     - React
-  - react-native-safe-area-context (4.10.9):
+  - react-native-safe-area-context (4.11.0):
     - React-Core
-  - react-native-video (6.4.5):
+  - react-native-video (6.6.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2509,7 +2509,7 @@ PODS:
     - React-featureflags
     - React-graphics
     - React-ImageManager
-    - react-native-video/Video (= 6.4.5)
+    - react-native-video/Video (= 6.6.3)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-rendererdebug
@@ -2518,7 +2518,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-video/Video (6.4.5):
+  - react-native-video/Video (6.6.3):
     - DoubleConversion
     - DVAssetLoaderDelegate (~> 0.3.1)
     - glog
@@ -2846,7 +2846,7 @@ PODS:
     - Yoga
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.18.1):
+  - RNGestureHandler (2.20.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2869,7 +2869,7 @@ PODS:
     - Yoga
   - RNPermissions (4.1.5):
     - React-Core
-  - RNReactNativeHapticFeedback (2.3.1):
+  - RNReactNativeHapticFeedback (2.3.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2890,7 +2890,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated (3.15.0):
+  - RNReanimated (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2910,10 +2910,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.15.0)
-    - RNReanimated/worklets (= 3.15.0)
+    - RNReanimated/reanimated (= 3.15.3)
+    - RNReanimated/worklets (= 3.15.3)
     - Yoga
-  - RNReanimated/reanimated (3.15.0):
+  - RNReanimated/reanimated (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2934,7 +2934,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated/worklets (3.15.0):
+  - RNReanimated/worklets (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2979,7 +2979,7 @@ PODS:
     - Yoga
   - RNShare (10.2.1):
     - React-Core
-  - RNSVG (15.4.0):
+  - RNSVG (15.7.1):
     - React-Core
   - SocketRocket (0.7.0)
   - SPTPersistentCache (1.1.0)
@@ -3354,14 +3354,14 @@ SPEC CHECKSUMS:
   React-logger: 0a81d1a40650bbdafb255fe4616edb83feed0ee9
   React-Mapbuffer: 08a80638581919dc3931d1dbdc9e2f4a6a446138
   React-microtasksnativemodule: 5a66c4c98a5578fbed3d41c98d5cd8728a5d5ade
-  react-native-blur: cc68347697dafe70d41be92657392870357e9954
-  react-native-geolocation: 27e2ec1ac037c5209c57716ad8cb0b4e61d145e7
+  react-native-blur: 0a96a365a933508e8ee20b9b26ee3cf508d618be
+  react-native-geolocation: cc79f2a7a8c6616db25b9728670bbb2011ded918
   react-native-google-maps: ee48410bb3f1390abfa20592a44db5d6ada83e4d
   react-native-maps: 2e6e9896195781327ee15b33e3e84bf73c08207a
-  react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
+  react-native-netinfo: f0a9899081c185db1de5bb2fdc1c88c202a059ac
   react-native-network-info: d1290ffc0bd0709e11436f5b8d7f605dcc5c4530
-  react-native-safe-area-context: ab8f4a3d8180913bd78ae75dd599c94cce3d5e9a
-  react-native-video: f1b6afcf5e7fda6929b351c2318d30ab5d90ed60
+  react-native-safe-area-context: 851c62c48dce80ccaa5637b6aa5991a1bc36eca9
+  react-native-video: 5b926f3d512fba073266fd6a43842da3f60edd95
   react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   React-nativeconfig: 174354b3e91ae72f95f1e4cb7c66af1b70209dd2
   React-NativeModulesApple: 81a10481d8d1ff9e1ba92cb96b986076d14b6672
@@ -3398,16 +3398,16 @@ SPEC CHECKSUMS:
   RNFBFirestore: b12e7d4e6a94e08565638442def454984a06c065
   RNFlashList: 997257a094906e3e254183ef90fcf7a5a6a2612d
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: 634189dbe31ecedf6e75c0d8b5ec5ae208850074
+  RNGestureHandler: b1bde7ef45d1472a8145a143efc097df8a9173a4
   RNPermissions: 02eed92dd4d4bf387cbbaf31f13eca32fa1e2f44
-  RNReactNativeHapticFeedback: 5ae6ca462509e4dcba5d6b1f70e272831972724c
-  RNReanimated: 33fe715a3f3c39cae412fe448090b42d1b0949cf
+  RNReactNativeHapticFeedback: 293365e4df1faef21be8b8efe22c7b217c5e695a
+  RNReanimated: 588d6037ed5b6aed59f0a1d08f163efce125d0cb
   RNScreens: de55b9d7de8a017d1588dcb70415492d0b0597c2
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
-  RNSVG: cb24fb322de8c1ebf59904e7aca0447bb8dbed5a
+  RNSVG: 4590aa95758149fa27c5c83e54a6a466349a1688
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SPTPersistentCache: df36ea46762d7cf026502bbb86a8b79d0080dff4
-  Yoga: 3dcf70785fde807153d1dba2a7ec35102526d9bf
+  Yoga: 01d87dd4b7b305f68d039a946815e8658d9cbb51
 
 PODFILE CHECKSUM: 2d37d4041bde4020f79fbfd5de2aa1f05d33aed8
 
