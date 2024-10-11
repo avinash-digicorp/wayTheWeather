@@ -12,3 +12,4 @@ export * from './infinite-scroll';
 export * from './animated-blur-view';
 export * from './header';
 export * from './scrollview';
+export * from './expandable-view';
