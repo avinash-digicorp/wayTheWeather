@@ -8,15 +8,17 @@ import {
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Portal} from 'react-native-paper';
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from 'utils/size';
 import Animated, {
   Easing,
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import {haptic} from 'utils';
 
-const {width, height} = Dimensions.get('window');
-
+const CONTENT_WIDTH = 200;
+const CONTENT_HEIGHT = 300;
 export const ExpandableComponent = ({normal, expanded}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [pressPosition, setPressPosition] = useState({x: 0, y: 0});
@@ -25,23 +27,30 @@ export const ExpandableComponent = ({normal, expanded}) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {scale: scale.value},
-        {translateX: translateX.value},
-        {translateY: translateY.value},
-      ],
-    };
-  });
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {scale: scale.value},
+      {translateX: translateX.value},
+      {translateY: translateY.value},
+    ],
+  }));
 
   const handleLongPress = event => {
     const {pageX, pageY} = event.nativeEvent;
     setPressPosition({x: pageX, y: pageY});
+    translateX.value = pageX;
+    translateY.value = pageY;
+    scale.value = 0;
+    let adjustedX = pageX - (SCREEN_WIDTH - CONTENT_WIDTH) / 2;
+    let adjustedY = pageY - (SCREEN_HEIGHT - CONTENT_HEIGHT) / 2;
+    haptic();
+    if (pageX + CONTENT_WIDTH > SCREEN_WIDTH) {
+      adjustedX = 50;
+    }
 
-    // Calculate adjusted position for the expanded view
-    const adjustedX = Math.max(0, Math.min(pageX - width / 2, width - 250)); // 250 is the width of the expanded view
-    const adjustedY = Math.max(0, Math.min(pageY - height / 2, height - 200)); // 200 is the height of the expanded view
+    if (adjustedY + adjustedY + CONTENT_HEIGHT > SCREEN_HEIGHT) {
+      adjustedY = (pageY - adjustedY) / 2;
+    }
 
     translateX.value = withTiming(adjustedX, {
       duration: 200,
@@ -96,8 +105,9 @@ const styles = StyleSheet.create({
   },
   fullScreenOverlay: {
     position: 'absolute',
-    width: width,
-    height: height,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    alignSelf: 'center',
     top: 0,
     left: 0,
     justifyContent: 'center',
@@ -106,14 +116,14 @@ const styles = StyleSheet.create({
   },
   fullScreenBlur: {
     position: 'absolute',
-    width: width,
-    height: height,
+    width: '100%',
+    height: '120%',
     top: 0,
     left: 0,
   },
   normalView: {
-    width: 150,
-    height: 100,
+    width: 300,
+    height: 300,
     backgroundColor: 'lightgray',
     justifyContent: 'center',
     alignItems: 'center',
@@ -121,13 +131,13 @@ const styles = StyleSheet.create({
   },
   expandedView: {
     position: 'absolute',
-    width: 250,
-    height: 200,
+    width: CONTENT_WIDTH,
+    height: CONTENT_HEIGHT,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
-    // Optional: Add a shadow for better visibility
+    elevation: 5,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.3,

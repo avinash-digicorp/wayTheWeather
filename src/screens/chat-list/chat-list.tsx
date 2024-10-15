@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, StatusBar} from 'react-native';
 import ChatListItem from './chat-item';
 
 export default () => {
@@ -9,6 +9,7 @@ export default () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar translucent backgroundColor={'transparent'} />
       <FlatList
         data={chatListData}
         renderItem={v => <ChatListItem {...v} onClick={deleteItem} />}
