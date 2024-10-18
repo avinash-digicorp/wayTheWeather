@@ -2,13 +2,21 @@ import React, {useEffect, useState, useRef} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import moment from 'moment';
 import {Modalize} from 'react-native-modalize';
-import {hasObjectLength} from 'utils';
+import {getRemainingDays, hasObjectLength} from 'utils';
+import {AnimatedIcon} from 'components/animated-icon';
+import {BaseButton} from 'components/base';
+import {AssetSvg} from 'components/asset-svg';
+
+type PopupTextType = {
+  title: string;
+  description: string;
+};
 
 export const RemindModal = ({planExpiryDate}) => {
-  const reminders = [7, 3, 1, 0];
+  const reminders = [7, 3, 1, 0, -1, -5];
   const bottomSheetRef = useRef<Modalize>(null);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [title, setTitle] = useState(null);
+  const [text, setText] = useState<PopupTextType>({title: '', description: ''});
   const [lastOpenedDate, setLastOpenedDate] = useState(null);
 
   useEffect(() => {
@@ -18,10 +26,8 @@ export const RemindModal = ({planExpiryDate}) => {
   }, []);
 
   const checkDaysRemaining = async () => {
-    const today = moment().startOf('day'); // Reset time to 00:00:00
-    const expiry = moment(planExpiryDate).startOf('day'); // Reset expiry date to 00:00:00
-    const days = expiry.diff(today, 'days'); // Compare only the date part
-    console.log(days, today);
+    const today = moment();
+    const days = getRemainingDays(planExpiryDate);
 
     const todayDateString = today.format('YYYY-MM-DD');
     if (lastOpenedDate === todayDateString) return;
@@ -29,8 +35,8 @@ export const RemindModal = ({planExpiryDate}) => {
       ?.map?.(item => ({day: item}))
       ?.find?.(item => item.day === days);
     if (hasObjectLength(reminder)) {
-      const message = generateMessage(reminder?.day ?? -1);
-      setTitle(message);
+      const message: PopupTextType = generateMessage(reminder?.day ?? -1);
+      setText(message);
       setIsBottomSheetOpen(true);
       bottomSheetRef.current?.open();
       setLastOpenedDate(todayDateString);
@@ -49,10 +55,13 @@ export const RemindModal = ({planExpiryDate}) => {
       adjustToContentHeight
       onClose={() => setIsBottomSheetOpen(false)}>
       <View style={styles.bottomSheetContent}>
-        <Text style={styles.modalText}>{title}</Text>
-        <Text style={styles.modalSubText}>
-          Please renew your plan to avoid interruption.
-        </Text>
+        <View className="absolute self-end top-4 right-4">
+          <AssetSvg name="cross" />
+        </View>
+        <AnimatedIcon autoPlay name="crown" style={{width: 200, height: 200}} />
+        <Text style={styles.modalText}>{text?.title}</Text>
+        <Text style={styles.modalSubText}>{text?.description}</Text>
+        <BaseButton title="Continue" onPress={handleClose} />
       </View>
     </Modalize>
   );
@@ -69,6 +78,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 20,
+    paddingTop: 10,
   },
   modalText: {
     fontSize: 18,
@@ -79,21 +90,30 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 20,
     textAlign: 'center',
+    width: '80%',
+    lineHeight: 25,
   },
 });
 
-const generateMessage = (days = -1) => {
-  if (days === 7) {
-    return 'Your plan will expire in a week.';
-  } else if (days === 3) {
-    return 'Your plan will expire in 3 days.';
-  } else if (days === 1) {
-    return 'Your plan will expire tomorrow.';
+const generateMessage = (days = -1): PopupTextType => {
+  let title = 'Your plan has expired.';
+  let description = 'Please renew your plan manually to avoid interruption.';
+
+  if (days < 0) {
+    title = 'Your plan has expired.';
   } else if (days === 0) {
-    return 'Your plan will expire today.';
-  } else if (days < 0) {
-    return 'Your plan has expired.';
+    title = 'Your plan will expire today.';
   } else {
-    return `Your plan will expire in ${days} days.`;
+    title = `Your plan will expire in ${days} days.`;
+    description =
+      'Please renew your plan manually after expiration to avoid interruption.';
+    if (days === 7) {
+      title = 'Your plan will expire in a week.';
+    }
+    if (days === 1) {
+      title = 'Your plan will expire tomorrow.';
+    }
   }
+
+  return {title, description};
 };

@@ -5,6 +5,7 @@ import lineBackground from './line-bg.json';
 import home from './home-lottie.json';
 import settings from './setting-lottie.json';
 import weather from './weather-lottie.json';
+import crown from './crown-lottie.json';
 
 export const ANIMATED_ICONS = {
   lineLoading,
@@ -14,6 +15,7 @@ export const ANIMATED_ICONS = {
   home,
   settings,
   weather,
+  crown,
 };
 
 export type AnimatedIconType = keyof typeof ANIMATED_ICONS;

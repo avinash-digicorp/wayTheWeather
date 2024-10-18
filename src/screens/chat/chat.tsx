@@ -14,6 +14,7 @@ import ChatMessages from './partials/chat-messages';
 import {useChat} from './chat-container';
 import _ from 'lodash';
 import {RemindModal} from 'components/common';
+import {OtpModal} from 'components/common/otp-modal';
 
 export const Chat = () => {
   const props = useChat();
@@ -32,7 +33,8 @@ export const Chat = () => {
         <ChatMessages {...props} />
         <ChatInput {...props} />
       </KeyboardAvoidingView>
-      <RemindModal planExpiryDate="2024-10-23" />
+      {/* <RemindModal planExpiryDate="2024-10-17" /> */}
+      <OtpModal />
     </View>
   );
 };
