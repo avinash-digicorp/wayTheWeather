@@ -17,6 +17,7 @@ import {Chat} from 'screens/chat';
 import {Todo} from 'screens/todo';
 import {AddTodo} from 'screens/add-todo';
 import ChatList from 'screens/chat-list';
+import LanguageList from 'screens/language-list';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
@@ -81,6 +82,7 @@ export const BottomTabNavigator = (
     />
     <Stack.Screen name={routes.CHAT} component={Chat} />
     <Stack.Screen name={routes.CHAT_LIST} component={ChatList} />
+    <Stack.Screen name={routes.LANGUAGE_LIST} component={LanguageList} />
     <Stack.Screen
       name={routes.ADD_TODO}
       options={{

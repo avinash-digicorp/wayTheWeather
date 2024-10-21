@@ -10,7 +10,7 @@ export const OtpModal = () => {
   const bottomSheetRef = useRef<Modalize>(null);
 
   useEffect(() => {
-    bottomSheetRef.current?.open();
+    // bottomSheetRef.current?.open();
   }, []);
 
   const handleClose = () => {

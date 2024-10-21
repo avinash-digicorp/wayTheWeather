@@ -1,43 +1,32 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import SwipeDeleteWrapper from './swipe-delete-wrapper';
-import {ExpandableComponent} from 'components';
 
 const ChatListItem = props => {
   const {item, isOwn} = props;
   return (
-    <ExpandableComponent
-      normal={
+    <SwipeDeleteWrapper {...props}>
+      <View style={styles.chatItem}>
         <Image source={{uri: item.profileImage}} style={styles.profileImage} />
-      }
-      expanded={
-        <SwipeDeleteWrapper {...props}>
-          <View style={styles.chatItem}>
-            <Image
-              source={{uri: item.profileImage}}
-              style={styles.profileImage}
-            />
-            <View style={styles.chatInfo}>
-              <View style={styles.chatHeader}>
-                <Text style={styles.chatName}>{item.name}</Text>
-                {!isOwn && (
-                  <Text style={styles.chatTime}>{item.lastMessageTime}</Text>
-                )}
-              </View>
-              <View style={styles.chatFooter}>
-                {isOwn && <Text>{'✔✔'}</Text>}
-                <Text style={styles.lastMessage}>{item.lastMessage}</Text>
-                {item.unreadCount > 0 && !isOwn && (
-                  <View style={styles.unreadBadge}>
-                    <Text style={styles.unreadCount}>{item.unreadCount}</Text>
-                  </View>
-                )}
-              </View>
-            </View>
+        <View style={styles.chatInfo}>
+          <View style={styles.chatHeader}>
+            <Text style={styles.chatName}>{item.name}</Text>
+            {!isOwn && (
+              <Text style={styles.chatTime}>{item.lastMessageTime}</Text>
+            )}
           </View>
-        </SwipeDeleteWrapper>
-      }
-    />
+          <View style={styles.chatFooter}>
+            {isOwn && <Text>{'✔✔'}</Text>}
+            <Text style={styles.lastMessage}>{item.lastMessage}</Text>
+            {item.unreadCount > 0 && !isOwn && (
+              <View style={styles.unreadBadge}>
+                <Text style={styles.unreadCount}>{item.unreadCount}</Text>
+              </View>
+            )}
+          </View>
+        </View>
+      </View>
+    </SwipeDeleteWrapper>
   );
 };
 

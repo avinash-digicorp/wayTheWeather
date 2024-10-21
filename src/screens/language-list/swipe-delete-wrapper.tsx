@@ -1,25 +1,38 @@
+import {Text} from 'components';
 import * as React from 'react';
-import {View, StyleSheet, FlatList, StatusBar} from 'react-native';
-import ChatListItem from './chat-item';
+import {View, StyleSheet} from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-export default () => {
-  const deleteItem = ({item, index}) => {
-    console.log(item, index);
+export default props => {
+  const {index, onClick} = props;
+  const closeRow = index => {};
+  const renderActions = () => {
+    return (
+      <View style={styles.rightContainer}>
+        <Text className="text-green-600 text-xs ml-2" text="accept" />
+        <Text className="text-xs ml-2 text-red-700" text="reject" />
+      </View>
+    );
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar translucent backgroundColor={'transparent'} />
-      <FlatList
-        data={chatListData}
-        renderItem={v => <ChatListItem {...v} onClick={deleteItem} />}
-        keyExtractor={item => item.id}
-      />
-    </View>
+    <Swipeable
+      renderLeftActions={renderActions}
+      renderRightActions={renderActions}
+      onSwipeableOpen={() => closeRow(index)}
+      rightOpenValue={-100}
+      {...props}
+    />
   );
 };
 
 const styles = StyleSheet.create({
+  rightContainer: {
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

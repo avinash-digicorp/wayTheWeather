@@ -122,8 +122,6 @@ const styles = StyleSheet.create({
     left: 0,
   },
   normalView: {
-    width: 300,
-    height: 300,
     backgroundColor: 'lightgray',
     justifyContent: 'center',
     alignItems: 'center',

@@ -19,4 +19,5 @@ export const routes = {
   CHAT_LIST: 'CHAT_LIST',
   ADD_TODO: 'ADD_TODO',
   TODO: 'TODO',
+  LANGUAGE_LIST: 'LANGUAGE_LIST',
 };
