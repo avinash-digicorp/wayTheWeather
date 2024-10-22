@@ -13,28 +13,30 @@ import ChatInput from './partials/chat-input';
 import ChatMessages from './partials/chat-messages';
 import {useChat} from './chat-container';
 import _ from 'lodash';
-import {RemindModal} from 'components/common';
 import {OtpModal} from 'components/common/otp-modal';
+import {KeyboardAwareView} from 'components';
 
 export const Chat = () => {
   const props = useChat();
   const {setSelectedMessage} = props;
   return (
     <View className="items-center justify-between" style={styles.container}>
-      <Pressable onPress={() => setSelectedMessage(null)} style={styles.bg}>
-        <ImageBackground
-          source={ASSET_IMAGES.chatBg}
-          resizeMode="repeat"
-          style={{width: '100%', height: '100%'}}
-        />
-      </Pressable>
-      <ChatHeader {...props} />
-      <KeyboardAvoidingView style={styles.container2}>
-        <ChatMessages {...props} />
-        <ChatInput {...props} />
-      </KeyboardAvoidingView>
-      {/* <RemindModal planExpiryDate="2024-10-17" /> */}
-      <OtpModal />
+      <KeyboardAwareView contentContainerStyle={{flex: 1}}>
+        <Pressable onPress={() => setSelectedMessage(null)} style={styles.bg}>
+          <ImageBackground
+            source={ASSET_IMAGES.chatBg}
+            resizeMode="repeat"
+            style={{width: '100%', height: '100%'}}
+          />
+        </Pressable>
+        <ChatHeader {...props} />
+        <KeyboardAvoidingView style={styles.container2}>
+          <ChatMessages {...props} />
+          <ChatInput {...props} />
+        </KeyboardAvoidingView>
+        {/* <RemindModal planExpiryDate="2024-10-17" /> */}
+        <OtpModal />
+      </KeyboardAwareView>
     </View>
   );
 };

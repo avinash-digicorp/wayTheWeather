@@ -4,6 +4,7 @@ import messageData from '../partials/message-data.json';
 import Bubble from './chat-item';
 import {Message} from './types';
 import moment from 'moment';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 
 const ChatMessages = props => {
   const {
@@ -20,9 +21,10 @@ const ChatMessages = props => {
     setMessageList(groupedMessages);
   }, [messages]);
   return (
-    <FlatList
+    <KeyboardAwareFlatList
       data={messageList}
       inverted
+      style={{flex: 1}}
       keyExtractor={(item: Message) => item?.id}
       renderItem={({item, index}) => {
         return (

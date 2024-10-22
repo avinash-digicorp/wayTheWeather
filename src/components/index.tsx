@@ -13,3 +13,4 @@ export * from './animated-blur-view';
 export * from './header';
 export * from './scrollview';
 export * from './expandable-view';
+export * from './keyboard-aware-view';

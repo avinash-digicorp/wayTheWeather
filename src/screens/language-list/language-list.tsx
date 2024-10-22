@@ -2,6 +2,8 @@ import * as React from 'react';
 import {View, StyleSheet, FlatList, StatusBar} from 'react-native';
 import LanguageItem from './language-item';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Settings from './partials/settings';
+import {EmailDomainModal} from 'components/common/email-domain-modal';
 
 export default () => {
   const [selected, setSelected] = React.useState(null);
@@ -13,7 +15,7 @@ export default () => {
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
         <StatusBar translucent backgroundColor={'transparent'} />
-        <FlatList
+        {/* <FlatList
           data={Languages}
           renderItem={v => (
             <LanguageItem
@@ -24,7 +26,9 @@ export default () => {
             />
           )}
           keyExtractor={item => item?.id?.toString()}
-        />
+        /> */}
+        <EmailDomainModal />
+        <Settings />
       </View>
     </SafeAreaView>
   );

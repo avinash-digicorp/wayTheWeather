@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet, FlatList, StatusBar} from 'react-native';
 import ChatListItem from './chat-item';
+import {EmailDomainModal} from 'components/common/email-domain-modal';
 
 export default () => {
   const deleteItem = ({item, index}) => {

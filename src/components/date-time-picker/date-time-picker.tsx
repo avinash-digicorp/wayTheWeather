@@ -34,7 +34,7 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
       ? moment(date).format('HH:mm A')
       : moment(date).format('DD MMM YYYY');
   return (
-    <View className="items-center justify-center mb-14">
+    <View className="items-center justify-between w-full mb-14 flex-row">
       <Text className="text-center text-gray-700 text-lg mb-1" tx={label} />
       <ButtonView
         hide={isIosPlatform}
