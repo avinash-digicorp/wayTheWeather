@@ -41,6 +41,7 @@ export const BaseButton = (props: IBaseButton) => {
     <View className={baseClasses}>
       <ButtonView
         {...props}
+        loading={loading}
         onPress={onPress}
         className={buttonClasses}
         style={style}>

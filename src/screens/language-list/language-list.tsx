@@ -4,8 +4,13 @@ import LanguageItem from './language-item';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Settings from './partials/settings';
 import {EmailDomainModal} from 'components/common/email-domain-modal';
+import {LotteryText} from 'components';
+import {useSharedValue} from 'react-native-reanimated';
+import {CodeGenerateModal} from 'components/common/code-generate-modal';
 
 export default () => {
+  const price = useSharedValue(145456);
+
   const [selected, setSelected] = React.useState(null);
   const deleteItem = ({item, index}) => {
     console.log(item, index);
@@ -28,6 +33,7 @@ export default () => {
           keyExtractor={item => item?.id?.toString()}
         /> */}
         <EmailDomainModal />
+        <CodeGenerateModal />
         <Settings />
       </View>
     </SafeAreaView>
