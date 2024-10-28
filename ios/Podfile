@@ -25,6 +25,9 @@ setup_permissions([
   'LocationAlways',
   'LocationWhenInUse',
   'MediaLibrary',
+  'PhotoLibrary',
+  'PhotoLibraryAddOnly',
+
 ])
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
