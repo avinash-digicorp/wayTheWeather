@@ -12,10 +12,9 @@ type PopupTextType = {
   description: string;
 };
 
-export const RemindModal = ({planExpiryDate}) => {
-  const reminders = [7, 3, 1, 0, -1, -5];
+export const RemindModal = ({planExpiryDate}: {planExpiryDate: any}) => {
+  const reminders = [30, 7, 3, 1, 0, -1]; // week, 3 days, tomorrow, today and already expired
   const bottomSheetRef = useRef<Modalize>(null);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [text, setText] = useState<PopupTextType>({title: '', description: ''});
   const [lastOpenedDate, setLastOpenedDate] = useState(null);
 
@@ -37,7 +36,6 @@ export const RemindModal = ({planExpiryDate}) => {
     if (hasObjectLength(reminder)) {
       const message: PopupTextType = generateMessage(reminder?.day ?? -1);
       setText(message);
-      setIsBottomSheetOpen(true);
       bottomSheetRef.current?.open();
       setLastOpenedDate(todayDateString);
     }
@@ -52,8 +50,7 @@ export const RemindModal = ({planExpiryDate}) => {
       withHandle={false}
       ref={bottomSheetRef}
       disableScrollIfPossible
-      adjustToContentHeight
-      onClose={() => setIsBottomSheetOpen(false)}>
+      adjustToContentHeight>
       <View style={styles.bottomSheetContent}>
         <View className="absolute self-end top-4 right-4">
           <AssetSvg name="cross" />
@@ -109,6 +106,9 @@ const generateMessage = (days = -1): PopupTextType => {
       'Please renew your plan manually after expiration to avoid interruption.';
     if (days === 7) {
       title = 'Your plan will expire in a week.';
+    }
+    if (days === 30) {
+      title = 'Your plan will expire in a month.';
     }
     if (days === 1) {
       title = 'Your plan will expire tomorrow.';
