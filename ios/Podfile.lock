@@ -2463,6 +2463,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-cameraroll (7.8.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-date-picker (5.0.7):
     - React-Core
   - react-native-geolocation (3.4.0):
@@ -2805,6 +2826,8 @@ PODS:
     - React-logger (= 0.75.1)
     - React-perflogger (= 0.75.1)
     - React-utils (= 0.75.1)
+  - ReactNativeCameraKit (13.0.0):
+    - React-Core
   - rn-fetch-blob (0.12.0):
     - React-Core
   - RNCAsyncStorage (1.24.0):
@@ -2981,7 +3004,7 @@ PODS:
     - Yoga
   - RNShare (10.2.1):
     - React-Core
-  - RNSVG (15.7.1):
+  - RNSVG (15.8.0):
     - React-Core
   - SocketRocket (0.7.0)
   - SPTPersistentCache (1.1.0)
@@ -3032,6 +3055,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-google-maps (from `../node_modules/react-native-maps`)
@@ -3067,6 +3091,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - ReactNativeCameraKit (from `../node_modules/react-native-camera-kit`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
@@ -3192,6 +3217,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-cameraroll:
+    :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
   react-native-geolocation:
@@ -3262,6 +3289,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeCameraKit:
+    :path: "../node_modules/react-native-camera-kit"
   rn-fetch-blob:
     :path: "../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
@@ -3360,6 +3389,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 08a80638581919dc3931d1dbdc9e2f4a6a446138
   React-microtasksnativemodule: 5a66c4c98a5578fbed3d41c98d5cd8728a5d5ade
   react-native-blur: 0a96a365a933508e8ee20b9b26ee3cf508d618be
+  react-native-cameraroll: 77d8c06f9c667feda5b2d165ead8e2ddd2cf68a3
   react-native-date-picker: 06a4d96ab525a163c7a90bccd68833d136b0bb13
   react-native-geolocation: cc79f2a7a8c6616db25b9728670bbb2011ded918
   react-native-google-maps: ee48410bb3f1390abfa20592a44db5d6ada83e4d
@@ -3395,6 +3425,7 @@ SPEC CHECKSUMS:
   React-utils: 7bc806f589085dcc341cb005b03620cf4394eb31
   ReactCodegen: 8a76b467a05b55b3487fc7499c4cc1ec6fe453de
   ReactCommon: 8eeefff0ead38a399e90e275ddc15f489c172725
+  ReactNativeCameraKit: 9d46a5d7dd544ca64aa9c03c150d2348faf437eb
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNCClipboard: 5e503962f0719ace8f7fdfe9c60282b526305c85
@@ -3405,16 +3436,16 @@ SPEC CHECKSUMS:
   RNFlashList: 997257a094906e3e254183ef90fcf7a5a6a2612d
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: b1bde7ef45d1472a8145a143efc097df8a9173a4
-  RNPermissions: 02eed92dd4d4bf387cbbaf31f13eca32fa1e2f44
+  RNPermissions: 8a9c3c96e6612654fd9e1c2029f87ac6ee4c39bb
   RNReactNativeHapticFeedback: 293365e4df1faef21be8b8efe22c7b217c5e695a
   RNReanimated: 588d6037ed5b6aed59f0a1d08f163efce125d0cb
   RNScreens: de55b9d7de8a017d1588dcb70415492d0b0597c2
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
-  RNSVG: 4590aa95758149fa27c5c83e54a6a466349a1688
+  RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SPTPersistentCache: df36ea46762d7cf026502bbb86a8b79d0080dff4
   Yoga: 01d87dd4b7b305f68d039a946815e8658d9cbb51
 
-PODFILE CHECKSUM: 2d37d4041bde4020f79fbfd5de2aa1f05d33aed8
+PODFILE CHECKSUM: 6b0c91be83cd9c74befb76aca2b2174d766a06b2
 
 COCOAPODS: 1.15.2

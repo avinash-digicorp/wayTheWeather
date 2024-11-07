@@ -5,6 +5,7 @@ import RNFS from 'react-native-fs';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import RNFetchBlob from 'rn-fetch-blob';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import Share from 'react-native-share';
 
 const Screen = Dimensions.get('window');
 export const SCREEN_WIDTH = Screen.width;
@@ -12,7 +13,9 @@ export const SCREEN_HEIGHT = Screen.height;
 export const isIOS = Platform.OS === 'ios';
 export const isAndroid = Platform.OS === 'android';
 export const isMWeb = Platform.OS === 'web';
+import CryptoJS from 'crypto-js';
 
+const secretKey = 'mySecretKey123';
 const appFolder = `${RNFS.LibraryDirectoryPath}/Pictures/Test`;
 // Function to check and request storage permissions
 const requestStoragePermission = async () => {
@@ -53,7 +56,42 @@ const requestStoragePermission = async () => {
   }
 };
 
-export const download = async viewRef => {
+export const shareView = async viewShotRef => {
+  try {
+    if (!viewShotRef.current) return;
+
+    // Capture the screenshot
+    const uri = await captureRef(viewShotRef.current, {
+      format: 'jpg',
+      quality: 0.8,
+    });
+
+    // Save the screenshot path differently for Android and iOS
+    const shareOptions = Platform.select({
+      android: {
+        url: `file://${uri}`,
+      },
+      ios: {
+        activityItemSources: [
+          {
+            placeholderItem: {type: 'url', content: uri},
+            item: {
+              default: {type: 'url', content: uri},
+            },
+          },
+        ],
+      },
+    });
+
+    // Share the screenshot
+    await Share.open(shareOptions);
+  } catch (error) {
+    console.log('Error sharing screenshot:', error);
+    Alert.alert('Error', 'An error occurred while sharing the screenshot.');
+  }
+};
+
+export const downloadView = async viewRef => {
   if (!viewRef.current) return;
   try {
     const permissionGranted = await requestStoragePermission();
@@ -75,7 +113,6 @@ export const download = async viewRef => {
     const fullPath = `${directoryPath}${newFileName}`;
 
     const directoryExists = await RNFetchBlob.fs.exists(directoryPath);
-    console.log('directoryExists', directoryExists);
     const picturesDir = `${RNFS.LibraryDirectoryPath}/Pictures/Test`;
     if (!directoryExists) {
       await RNFS.mkdir(picturesDir)
@@ -109,4 +146,17 @@ export const getFormattedTemperature = (temp = 0): ITemperature => {
   const celsiusTemp = `${Math.round(celsius)}°`;
 
   return {fahrenheit, celsius, fahrenheitTemp, celsiusTemp};
+};
+export const encryptData = data => {
+  const stringData = JSON.stringify(data); // Convert data to a string if it's an object
+  const encryptedData = CryptoJS.AES.encrypt(stringData, secretKey).toString();
+  return encodeURIComponent(encryptedData); // Encode for use in a URL
+};
+
+// Decrypt function
+export const decryptData = encryptedData => {
+  const decodedData = decodeURIComponent(encryptedData); // Decode from URL format
+  const bytes = CryptoJS.AES.decrypt(decodedData, secretKey);
+  const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+  return JSON.parse(decryptedData); // Convert string back to object if needed
 };

@@ -18,6 +18,7 @@ import {Todo} from 'screens/todo';
 import {AddTodo} from 'screens/add-todo';
 import ChatList from 'screens/chat-list';
 import LanguageList from 'screens/language-list';
+import {Share} from 'screens/share';
 
 const TabStack = AnimatedTabBarNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,7 +37,7 @@ export const BottomTabs = () => (
     backBehavior="history">
     <TabStack.Screen
       name={routes.MAIN_HOME}
-      component={AddressSelect}
+      component={Home}
       options={{
         tabBarIcon: props => (
           <TabButton {...props} routeName={routes.MAIN_HOME} />
@@ -100,6 +101,15 @@ export const BottomTabNavigator = (
         animationTypeForReplace: 'push',
       }}
       component={Todo}
+    />
+    <Stack.Screen
+      name={routes.SHARE}
+      options={{
+        animation: 'fade',
+        animationDuration: 300,
+        animationTypeForReplace: 'push',
+      }}
+      component={Share}
     />
   </Stack.Group>
 );

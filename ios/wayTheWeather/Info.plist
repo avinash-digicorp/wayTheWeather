@@ -6,6 +6,8 @@
 	<string>We need your permission to save images to your photo library.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need your permission to add images to your photo library.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>For taking photos</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

@@ -4,7 +4,8 @@ import {useHomeContainer} from './home-container';
 import DateTimeView from './partials/date-time-view';
 import {SearchLocationView} from './partials/search-location-view';
 import {ASSET_IMAGES} from 'assets/images';
-import {AnimatedBlurView, LoadingButton} from 'components';
+import {AnimatedBlurView, BaseButton} from 'components';
+import {CameraModal, CameraModalService} from 'components/modals';
 
 export default () => {
   const props = useHomeContainer();
@@ -27,6 +28,7 @@ export default () => {
             barStyle={'dark-content'}
             translucent
           />
+
           <SearchLocationView
             address={startLocationTitle}
             onPress={enterStartLocation}

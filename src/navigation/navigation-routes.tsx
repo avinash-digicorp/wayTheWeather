@@ -20,4 +20,5 @@ export const routes = {
   ADD_TODO: 'ADD_TODO',
   TODO: 'TODO',
   LANGUAGE_LIST: 'LANGUAGE_LIST',
+  SHARE: 'SHARE',
 };

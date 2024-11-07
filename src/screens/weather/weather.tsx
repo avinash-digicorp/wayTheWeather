@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {useWeather} from './weather-container';
-import {Header, ScrollView, Text} from 'components';
+import {BaseButton, Header, ScrollView, Text} from 'components';
 import {useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {getFormattedTemperature} from 'utils/helper';
 // @ts-ignore
 import {BlurView} from '@react-native-community/blur';
-import {ASSET_IMAGES} from 'assets/images';
+import {CameraModal} from 'components/modals';
+import {CameraModalService} from 'components/modals/camera-modal/camera-modal';
 
 export const Weather = () => {
   const {} = useWeather();
@@ -47,6 +48,7 @@ export const Weather = () => {
               text={temperature}
               style={styles.textShadow}
             />
+
             <Text
               className="text-white"
               text={weather?.name}
@@ -68,7 +70,12 @@ export const Weather = () => {
             </BlurCard>
           </View>
         </View>
+        <BaseButton
+          title="Scan QR Code"
+          onPress={CameraModalService?.openModal}
+        />
       </ScrollView>
+      <CameraModal onCaptureImage={d => console.log({d})} />
     </View>
   );
 };
