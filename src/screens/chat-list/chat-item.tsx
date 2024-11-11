@@ -1,13 +1,42 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import SwipeDeleteWrapper from './swipe-delete-wrapper';
+import {haptic} from 'utils';
 
 const ChatListItem = props => {
-  const {item, isOwn} = props;
+  const {item, isOwn, selectedItems, setSelectedItems} = props;
+  const onLongPress = () => {
+    if (selectedItems.includes(item.id)) {
+      setSelectedItems(selectedItems.filter(id => id != item.id));
+    } else {
+      setSelectedItems([...selectedItems, item.id]);
+    }
+    haptic();
+  };
+  const onPress = () => {
+    if (selectedItems.length) {
+      onLongPress();
+      return;
+    }
+  };
+  const isSelected = selectedItems.includes(item.id);
   return (
     <SwipeDeleteWrapper {...props}>
-      <View style={styles.chatItem}>
-        <Image source={{uri: item.profileImage}} style={styles.profileImage} />
+      <TouchableOpacity
+        onPress={onPress}
+        onLongPress={onLongPress}
+        style={styles.chatItem}>
+        <View>
+          <Image
+            source={{uri: item.profileImage}}
+            style={styles.profileImage}
+          />
+          {isSelected && (
+            <View className="absolute bottom-0 -right-2 bg-primary border border-white w-5 h-5 rounded-full items-center justify-center">
+              <Text className="text-xs">{'✔✔'}</Text>
+            </View>
+          )}
+        </View>
         <View style={styles.chatInfo}>
           <View style={styles.chatHeader}>
             <Text style={styles.chatName}>{item.name}</Text>
@@ -25,7 +54,7 @@ const ChatListItem = props => {
             )}
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </SwipeDeleteWrapper>
   );
 };

@@ -16,7 +16,9 @@ export const ApplicationNavigator = () => {
   return (
     <Animated.View style={style} className="w-full flex-1 h-full">
       <NavigationContainer theme={theme} ref={navigationRef}>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator
+          screenOptions={{headerShown: false}}
+          initialRouteName={routes.CHAT_LIST}>
           {BottomTabNavigator}
           {CommonNavigator}
         </Stack.Navigator>

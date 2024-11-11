@@ -4,6 +4,7 @@ import ChatListItem from './chat-item';
 import {EmailDomainModal} from 'components/common/email-domain-modal';
 
 export default () => {
+  const [selectedItems, setSelectedItems] = React.useState([]);
   const deleteItem = ({item, index}) => {
     console.log(item, index);
   };
@@ -13,7 +14,14 @@ export default () => {
       <StatusBar translucent backgroundColor={'transparent'} />
       <FlatList
         data={chatListData}
-        renderItem={v => <ChatListItem {...v} onClick={deleteItem} />}
+        renderItem={v => (
+          <ChatListItem
+            {...v}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+            onClick={deleteItem}
+          />
+        )}
         keyExtractor={item => item.id}
       />
     </View>
